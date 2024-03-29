@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="template\opencl.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\opengl.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\surface.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\template.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui.cpp">
+      <Filter>template\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_demo.cpp">
+      <Filter>template\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_draw.cpp">
+      <Filter>template\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_impl_glfw.cpp">
+      <Filter>template\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_impl_opengl3.cpp">
+      <Filter>template\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_tables.cpp">
+      <Filter>template\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_widgets.cpp">
+      <Filter>template\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="template\scene.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\tmpl8math.cpp" />
+    <ClCompile Include="renderer.cpp">
+      <Filter>Apps\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SineWave.cpp">
+      <Filter>Apps\SineWave</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptyApp.cpp">
+      <Filter>Apps\EmptyApp</Filter>
+    </ClCompile>
+    <ClCompile Include="Lines.cpp">
+      <Filter>Apps\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOfLife.cpp">
+      <Filter>Apps\GameOfLife</Filter>
+    </ClCompile>
+    <ClCompile Include="Dots.cpp">
+      <Filter>Apps\Dots</Filter>
+    </ClCompile>
+    <ClCompile Include="Ant.cpp">
+      <Filter>Apps\Dots</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="template\camera.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\common.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\opencl.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\opengl.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\precomp.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\scene.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\surface.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imstb_truetype.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imgui.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imgui_impl_glfw.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imgui_impl_opengl3.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imgui_internal.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imstb_rectpack.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imstb_textedit.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\imgui\imconfig.h">
+      <Filter>template\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="template\tmpl8math.h" />
+    <ClInclude Include="renderer.h">
+      <Filter>Apps\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SineWave.h">
+      <Filter>Apps\SineWave</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyApp.h">
+      <Filter>Apps\EmptyApp</Filter>
+    </ClInclude>
+    <ClInclude Include="Lines.h">
+      <Filter>Apps\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOfLife.h">
+      <Filter>Apps\GameOfLife</Filter>
+    </ClInclude>
+    <ClInclude Include="Dots.h">
+      <Filter>Apps\Dots</Filter>
+    </ClInclude>
+    <ClInclude Include="Ant.h">
+      <Filter>Apps\Dots</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="template">
+      <UniqueIdentifier>{a7d6e3cb-bfcd-438d-979f-17df241a55b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template\imgui">
+      <UniqueIdentifier>{b1e7f5d5-23d5-4fa2-8854-9a94fb160820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps">
+      <UniqueIdentifier>{60a828e2-c9c2-4959-b153-c51523137a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Renderer">
+      <UniqueIdentifier>{c92c9675-2f93-4a5b-a151-c50637a38413}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\SineWave">
+      <UniqueIdentifier>{9eacbf12-142d-4de0-a2dc-d7a83ed750ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\EmptyApp">
+      <UniqueIdentifier>{45dcb754-b788-4b3a-a129-33496c80db46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Lines">
+      <UniqueIdentifier>{5df005c4-6beb-49e3-8e89-3284e1ea7a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\GameOfLife">
+      <UniqueIdentifier>{98fb4bdf-cd75-4d72-b8c5-9901eaef335d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Dots">
+      <UniqueIdentifier>{b1e88066-4cf5-457a-a063-17c5e7569f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Wolfram">
+      <UniqueIdentifier>{969a062b-48cf-4a30-b45d-7dfc24f6a8c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="template\LICENSE">
+      <Filter>template</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+﻿  Dots.cpp
+C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(9,16): warning C4244: 'argument': conversion from 'uint' to 'const float', possible loss of data
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(48,26): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(48,19): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(81,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(126,17): warning C4244: 'argument': conversion from 'uint' to 'const float', possible loss of data
+  (compiling source file '/Dots.cpp')
+  
+  tmpl_2024-vox.vcxproj -> C:\Users\Sven\Downloads\Spheres\voxpopuli-main\x64\voxpopuli_debug.exe
