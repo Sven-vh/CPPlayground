@@ -1,5 +1,6 @@
 #pragma once
 #include "Ant.h"
+#define SIMD 1
 
 class Dots : public TheApp {
 public:
@@ -20,8 +21,21 @@ public:
 	int2 mousePos;
 	bool mouseDown = false;
 private:
-	int antCount = 10000;
+	int spawnCount = 300'000;
+
+#if SIMD
+	int numAnts = 0;
+	std::vector<float> xPositions;
+	std::vector<float> yPositions;
+	std::vector<float> xVelocities;
+	std::vector<float> yVelocities;
+	std::vector<float> xDesiredDirections;
+	std::vector<float> yDesiredDirections;
+	std::vector<float> angles;
+	std::vector<__m256> xPoints, yPoints;
+#else
 	std::vector<Ant> ants;
+#endif
 
 	float4 antColor = float4(1.0f);
 	//0xFF977D5E as a float4

@@ -1,17 +1,48 @@
 ﻿  Dots.cpp
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(9,16): warning C4244: 'argument': conversion from 'uint' to 'const float', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(46,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(48,26): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(47,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(48,19): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(63,27): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
   (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(81,13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(63,39): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(126,17): warning C4244: 'argument': conversion from 'uint' to 'const float', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(63,20): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
   (compiling source file '/Dots.cpp')
   
-  tmpl_2024-vox.vcxproj -> C:\Users\Sven\Downloads\Spheres\voxpopuli-main\x64\voxpopuli_debug.exe
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,29): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,29): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,29): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,29): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,29): warning C4244:         ]
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,15): warning C4244: 'initializing': conversion from '_Ty' to 'const int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,15): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,15): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,15): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(195,15): warning C4244:         ]
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,29): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,29): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,29): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,29): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,29): warning C4244:         ]
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,15): warning C4244: 'initializing': conversion from '_Ty' to 'const int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,15): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,15): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,15): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(196,15): warning C4244:         ]
+  (compiling source file '/Dots.cpp')
+  
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(220,41): warning C4244: 'argument': conversion from 'uint' to 'const float', possible loss of data
+  (compiling source file '/Dots.cpp')
+  
+  tmpl_2024-vox.vcxproj -> C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\voxpopuli_debug.exe

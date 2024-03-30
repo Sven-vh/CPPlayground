@@ -127,6 +127,9 @@ float RandomFloat();
 float RandomFloat(uint& seed);
 float Rand(float range);
 float2 RandomInsideUnitCircle();
+void RandomInsideUnitCircleSIMD(__m256& xValues, __m256& yValues);
+__m256 RandomFloatSIMD();
+void GeneratePointsSIMD(std::vector<__m256>& xPoints, std::vector<__m256>& yPoints, int requiredCount);
 
 // math
 inline float fminf(const float a, const float b) { return a < b ? a : b; }
@@ -503,6 +506,8 @@ inline int dot(const int4& a, const int4& b) { return a.x * b.x + a.y * b.y + a.
 inline uint dot(const uint2& a, const uint2& b) { return a.x * b.x + a.y * b.y; }
 inline uint dot(const uint3& a, const uint3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 inline uint dot(const uint4& a, const uint4& b) { return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w; }
+
+inline __m256 dot(const __m256& a, const __m256& b) { return _mm256_dp_ps(a, b, 0x71); }
 
 inline float sqrLength(const float2& v) { return dot(v, v); }
 inline float sqrLength(const float3& v) { return dot(v, v); }
@@ -979,3 +984,10 @@ float3 TransformVector_SSE(const __m128& a, const mat4& M);
 // Perlin noise
 float noise2D(const float x, const float y);
 float noise3D(const float x, const float y, const float z);
+
+//https://gist.github.com/volkansalma/2972237
+float atan2_approximation1(float y, float x);
+#define PI_FLOAT     3.14159265f
+#define PIBY2_FLOAT  1.5707963f
+// |error| < 0.005
+float atan2_approximation2(float y, float x);

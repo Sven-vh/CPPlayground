@@ -1,172 +1,40 @@
-﻿  template.cpp
-  Ant.cpp
-  Dots.cpp
-  EmptyApp.cpp
-  GameOfLife.cpp
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(76,26): warning C4244: 'argument': conversion from 'const float' to 'const int', possible loss of data
+﻿  Dots.cpp
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(47,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(76,19): warning C4244: 'argument': conversion from 'const float' to 'const int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(48,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Dots.cpp(87,41): warning C4244: 'argument': conversion from 'uint' to 'const float', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,29): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,29): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,29): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,29): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,29): warning C4244:         ]
   (compiling source file '/Dots.cpp')
   
-  Lines.cpp
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(21,19): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/Lines.cpp')
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,15): warning C4244: 'initializing': conversion from '_Ty' to 'const int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,15): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,15): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,15): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(207,15): warning C4244:         ]
+  (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(22,19): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/Lines.cpp')
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,29): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,29): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,29): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,29): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,29): warning C4244:         ]
+  (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(23,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,15): warning C4244: 'initializing': conversion from '_Ty' to 'const int', possible loss of data
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,15): warning C4244:         with
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,15): warning C4244:         [
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,15): warning C4244:             _Ty=float
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(208,15): warning C4244:         ]
+  (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(23,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp(232,41): warning C4244: 'argument': conversion from 'uint' to 'const float', possible loss of data
+  (compiling source file '/Dots.cpp')
   
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(23,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(23,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(24,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(24,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(24,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(24,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(27,22): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(28,29): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(29,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(29,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(29,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(29,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(30,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(30,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(30,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\Lines.cpp(30,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/Lines.cpp')
-  
-  SineWave.cpp
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(48,55): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(56,67): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(56,40): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(63,67): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(63,40): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(75,62): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(75,34): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(76,62): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(76,34): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\SineWave.cpp(90,10): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
-  (compiling source file '/SineWave.cpp')
-  
-  imgui.cpp
-  imgui_draw.cpp
-  imgui_impl_glfw.cpp
-  imgui_impl_opengl3.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  renderer.cpp
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\renderer.cpp(24,42): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  (compiling source file '/renderer.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\renderer.cpp(24,26): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-  (compiling source file '/renderer.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\renderer.cpp(44,50): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/renderer.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\renderer.cpp(44,46): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/renderer.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\renderer.cpp(44,30): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-  (compiling source file '/renderer.cpp')
-  
-  opencl.cpp
-  opengl.cpp
-  scene.cpp
-  surface.cpp
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(158,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(159,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(161,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(162,15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(350,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(351,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(387,34): warning C4244: 'initializing': conversion from 'float' to 'unsigned char', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(387,26): warning C4244: 'initializing': conversion from 'float' to 'const unsigned char', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(463,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(464,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(466,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-C:\Users\Sven\Downloads\Spheres\voxpopuli-main\template\surface.cpp(467,15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  (compiling source file '/template/surface.cpp')
-  
-  tmpl8math.cpp
-  Generating Code...
-     Creating library C:\Users\Sven\Downloads\Spheres\voxpopuli-main\x64\voxpopuli.lib and object C:\Users\Sven\Downloads\Spheres\voxpopuli-main\x64\voxpopuli.exp
-  tmpl_2024-vox.vcxproj -> C:\Users\Sven\Downloads\Spheres\voxpopuli-main\x64\voxpopuli.exe
+     Creating library C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\voxpopuli.lib and object C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\voxpopuli.exp
+  tmpl_2024-vox.vcxproj -> C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\voxpopuli.exe

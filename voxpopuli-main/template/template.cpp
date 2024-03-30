@@ -396,7 +396,7 @@ void main() {
 	ImGui::DestroyContext();
 	glfwDestroyWindow(window);
 	glfwTerminate();
-	}
+}
 
 // Jobmanager implementation
 DWORD JobThreadProc(LPVOID lpParameter) {

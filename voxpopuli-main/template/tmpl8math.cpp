@@ -51,12 +51,68 @@ uint RandomUInt(uint& customSeed) {
 }
 float RandomFloat(uint& customSeed) { return RandomUInt(customSeed) * 2.3283064365387e-10f; }
 
+
 float2 RandomInsideUnitCircle() {
 	float2 p;
 	do {
 		p = 2.0f * make_float2(RandomFloat(), RandomFloat()) - make_float2(1.0f, 1.0f);
 	} while (dot(p, p) >= 1.0f);
 	return p;
+}
+
+__m256 one = _mm256_set1_ps(1.0f);
+__m256 two = _mm256_set1_ps(2.0f);
+__m256 minusOne = _mm256_set1_ps(-1.0f);
+void RandomInsideUnitCircleSIMD(__m256& x, __m256& y) {
+
+	int mask;
+	do {
+		// Generate random points in the range [-1.0, 1.0)
+		x = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
+		y = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
+
+		// Calculate the dot product of the point with itself, which represents the squared length of the vector
+		__m256 dot = _mm256_add_ps(_mm256_mul_ps(x, x), _mm256_mul_ps(y, y));
+
+		// Check which points are inside the unit circle (dot < 1.0)
+		__m256 maskVec = _mm256_cmp_ps(dot, one, _CMP_LT_OQ);
+		mask = _mm256_movemask_ps(maskVec);
+
+		// Repeat until all points are within the unit circle. Note: This loop might need a break condition
+		// in a real-world scenario to avoid potential infinite loops due to numerical precision limitations.
+	} while (mask != 0xFF);
+}
+
+__m256 RandomFloatSIMD() {
+	// Implement your random float generator here, returning 8 random floats in a __m256 vector.
+	// Placeholder implementation - replace with your actual random number generation logic.
+	return _mm256_set_ps(RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat());
+}
+
+void GeneratePointsSIMD(std::vector<__m256>& xPoints, std::vector<__m256>& yPoints, int requiredCount) {
+	__m256 two = _mm256_set1_ps(2.0f);
+	__m256 one = _mm256_set1_ps(1.0f);
+	int found = 0;
+
+	while (found < requiredCount) {
+		// Generate a batch of random points
+		__m256 x = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
+		__m256 y = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
+
+		// Check for points inside the unit circle
+		__m256 dot = _mm256_add_ps(_mm256_mul_ps(x, x), _mm256_mul_ps(y, y));
+		__m256 mask = _mm256_cmp_ps(dot, one, _CMP_LT_OQ);
+		int maskBits = _mm256_movemask_ps(mask);
+
+		for (int i = 0; i < 8 && found < requiredCount; ++i) {
+			if (maskBits & (1 << i)) {
+				// Store valid points
+				xPoints.push_back(_mm256_set1_ps(((float*)&x)[i]));
+				yPoints.push_back(_mm256_set1_ps(((float*)&y)[i]));
+				found++;
+			}
+		}
+	}
 }
 
 // Perlin noise implementation - https://stackoverflow.com/questions/29711668/perlin-noise-generation
@@ -125,6 +181,51 @@ float noise3D(const float x, const float y, const float z) {
 	}
 	// use the average of all octaves
 	return noise;
+}
+
+float atan2_approximation1(float y, float x) {
+	//http://pubs.opengroup.org/onlinepubs/009695399/functions/atan2.html
+	//Volkan SALMA
+
+	const float ONEQTR_PI = PI / 4.0;
+	const float THRQTR_PI = 3.0 * PI / 4.0;
+	float r, angle;
+	float abs_y = fabs(y) + 1e-10f;      // kludge to prevent 0/0 condition
+	if (x < 0.0f) {
+		r = (x + abs_y) / (abs_y - x);
+		angle = THRQTR_PI;
+	} else {
+		r = (x - abs_y) / (x + abs_y);
+		angle = ONEQTR_PI;
+	}
+	angle += (0.1963f * r * r - 0.9817f) * r;
+	if (y < 0.0f)
+		return(-angle);     // negate if in quad III or IV
+	else
+		return(angle);
+
+
+}
+
+float atan2_approximation2(float y, float x) {
+	if (x == 0.0f) {
+		if (y > 0.0f) return PIBY2_FLOAT;
+		if (y == 0.0f) return 0.0f;
+		return -PIBY2_FLOAT;
+	}
+	float atan;
+	float z = y / x;
+	if (fabs(z) < 1.0f) {
+		atan = z / (1.0f + 0.28f * z * z);
+		if (x < 0.0f) {
+			if (y < 0.0f) return atan - PI_FLOAT;
+			return atan + PI_FLOAT;
+		}
+	} else {
+		atan = PIBY2_FLOAT - z / (z * z + 0.28f);
+		if (y < 0.0f) return atan - PI_FLOAT;
+	}
+	return atan;
 }
 
 // math implementations
