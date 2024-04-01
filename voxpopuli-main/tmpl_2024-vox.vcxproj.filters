@@ -59,6 +59,15 @@
     <ClCompile Include="Ant.cpp">
       <Filter>Apps\Dots</Filter>
     </ClCompile>
+    <ClCompile Include="Maze.cpp">
+      <Filter>Apps\Maze</Filter>
+    </ClCompile>
+    <ClCompile Include="Wolfram.cpp">
+      <Filter>Apps\Wolfram</Filter>
+    </ClCompile>
+    <ClCompile Include="Verlet.cpp">
+      <Filter>Apps\Verlet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="template\camera.h">
@@ -131,6 +140,15 @@
     <ClInclude Include="Ant.h">
       <Filter>Apps\Dots</Filter>
     </ClInclude>
+    <ClInclude Include="Maze.h">
+      <Filter>Apps\Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolfram.h">
+      <Filter>Apps\Wolfram</Filter>
+    </ClInclude>
+    <ClInclude Include="Verlet.h">
+      <Filter>Apps\Verlet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template">
@@ -162,6 +180,12 @@
     </Filter>
     <Filter Include="Apps\Wolfram">
       <UniqueIdentifier>{969a062b-48cf-4a30-b45d-7dfc24f6a8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Maze">
+      <UniqueIdentifier>{b50f58cd-2f06-4f9b-971b-00d3aa5d1949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Verlet">
+      <UniqueIdentifier>{31b05d4e-2e44-4bb9-a2bf-403e8b0e9d7d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

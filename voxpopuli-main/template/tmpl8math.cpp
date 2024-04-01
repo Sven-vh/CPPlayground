@@ -13,7 +13,7 @@
 
 // RNG seed. NOTE: in a multithreaded application, don't use a single seed!
 static thread_local uint seed = 0x12345678;
-
+static thread_local __m256i simdSeed = _mm256_set1_epi32(0x12345678);
 // WangHash: calculates a high-quality seed based on an arbitrary non-zero
 // integer. Use this to create your own seed based on e.g. thread index.
 uint WangHash(uint s) {
@@ -27,19 +27,10 @@ uint InitSeed(uint seedBase) {
 	return WangHash((seedBase + 1) * 17);
 }
 
-// RandomUInt()
-// Update the seed and return it as a random 32-bit unsigned int.
-uint RandomUInt() {
-	seed ^= seed << 13;
-	seed ^= seed >> 17;
-	seed ^= seed << 5;
-	return seed;
-}
 
 // RandomFloat()
 // Calculate a random unsigned int and cast it to a float in the range
 // [0..1)
-float RandomFloat() { return RandomUInt() * 2.3283064365387e-10f; }
 float Rand(float range) { return RandomFloat() * range; }
 
 // Calculate a random number based on a specific seed
@@ -51,6 +42,45 @@ uint RandomUInt(uint& customSeed) {
 }
 float RandomFloat(uint& customSeed) { return RandomUInt(customSeed) * 2.3283064365387e-10f; }
 
+// RandomUInt()
+// Update the seed and return it as a random 32-bit unsigned int.
+uint RandomUInt() {
+	seed ^= seed << 13;
+	seed ^= seed >> 17;
+	seed ^= seed << 5;
+	return seed;
+}
+
+float RandomFloat() { return RandomUInt() * 2.3283064365387e-10f; }
+
+
+
+__m256i RandomUInt256() {
+	const __m256i a = _mm256_set1_epi32(13);
+	const __m256i b = _mm256_set1_epi32(17);
+	const __m256i c = _mm256_set1_epi32(5);
+
+	// Perform the bitwise operations on all eight simdSeeds in parallel
+	simdSeed = _mm256_xor_si256(simdSeed, _mm256_slli_epi32(simdSeed, 13));
+	simdSeed = _mm256_xor_si256(simdSeed, _mm256_srli_epi32(simdSeed, 17));
+	simdSeed = _mm256_xor_si256(simdSeed, _mm256_slli_epi32(simdSeed, 5));
+
+	return simdSeed;
+}
+
+__m256 RandomFloat256() {
+	__m256i randInt = RandomUInt256();
+	__m256 randFloat = _mm256_cvtepi32_ps(randInt);  // Convert ints to floats
+	const __m256 scale = _mm256_set1_ps(2.3283064365387e-10f);  // 1/2^32
+	return _mm256_mul_ps(randFloat, scale);
+}
+
+__m256 RandomFloatSIMD256() {
+	return _mm256_set_ps(
+		RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(),
+		RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat()
+	);
+}
 
 float2 RandomInsideUnitCircle() {
 	float2 p;
@@ -60,60 +90,36 @@ float2 RandomInsideUnitCircle() {
 	return p;
 }
 
-__m256 one = _mm256_set1_ps(1.0f);
-__m256 two = _mm256_set1_ps(2.0f);
-__m256 minusOne = _mm256_set1_ps(-1.0f);
-void RandomInsideUnitCircleSIMD(__m256& x, __m256& y) {
-
-	int mask;
-	do {
-		// Generate random points in the range [-1.0, 1.0)
-		x = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
-		y = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
-
-		// Calculate the dot product of the point with itself, which represents the squared length of the vector
-		__m256 dot = _mm256_add_ps(_mm256_mul_ps(x, x), _mm256_mul_ps(y, y));
-
-		// Check which points are inside the unit circle (dot < 1.0)
-		__m256 maskVec = _mm256_cmp_ps(dot, one, _CMP_LT_OQ);
-		mask = _mm256_movemask_ps(maskVec);
-
-		// Repeat until all points are within the unit circle. Note: This loop might need a break condition
-		// in a real-world scenario to avoid potential infinite loops due to numerical precision limitations.
-	} while (mask != 0xFF);
+__m512 RandomFloatSIMD512() {
+	return _mm512_set_ps(RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat());
 }
 
-__m256 RandomFloatSIMD() {
-	// Implement your random float generator here, returning 8 random floats in a __m256 vector.
-	// Placeholder implementation - replace with your actual random number generation logic.
-	return _mm256_set_ps(RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat());
-}
-
-void GeneratePointsSIMD(std::vector<__m256>& xPoints, std::vector<__m256>& yPoints, int requiredCount) {
-	__m256 two = _mm256_set1_ps(2.0f);
+//doesn't work
+void RandomInsideUnitCircleSIMD(__m256& xPoints, __m256& yPoints) {
+	__m256 x, y, dot;
 	__m256 one = _mm256_set1_ps(1.0f);
-	int found = 0;
+	int mask;
 
-	while (found < requiredCount) {
-		// Generate a batch of random points
-		__m256 x = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
-		__m256 y = _mm256_sub_ps(_mm256_mul_ps(two, RandomFloatSIMD()), one);
+	do {
+		x = _mm256_sub_ps(_mm256_mul_ps(RandomFloat256(), _mm256_set1_ps(2.0f)), _mm256_set1_ps(1.0f));
+		y = _mm256_sub_ps(_mm256_mul_ps(RandomFloat256(), _mm256_set1_ps(2.0f)), _mm256_set1_ps(1.0f));
 
-		// Check for points inside the unit circle
-		__m256 dot = _mm256_add_ps(_mm256_mul_ps(x, x), _mm256_mul_ps(y, y));
-		__m256 mask = _mm256_cmp_ps(dot, one, _CMP_LT_OQ);
-		int maskBits = _mm256_movemask_ps(mask);
+		// Dot product of (x, y) with itself gives the squared length
+		dot = _mm256_add_ps(_mm256_mul_ps(x, x), _mm256_mul_ps(y, y));
 
-		for (int i = 0; i < 8 && found < requiredCount; ++i) {
-			if (maskBits & (1 << i)) {
-				// Store valid points
-				xPoints.push_back(_mm256_set1_ps(((float*)&x)[i]));
-				yPoints.push_back(_mm256_set1_ps(((float*)&y)[i]));
-				found++;
-			}
-		}
-	}
+		// Compare the squared length with 1.0 (the radius squared)
+		__m256 mask_ps = _mm256_cmp_ps(dot, one, _CMP_LT_OQ);
+
+		// Convert the comparison result to a mask for later use
+		mask = _mm256_movemask_ps(mask_ps);
+
+		// Continue looping until all elements satisfy the condition (mask == 0xFF)
+	} while (mask != 0xFF);
+
+	xPoints = x;
+	yPoints = y;
 }
+
 
 // Perlin noise implementation - https://stackoverflow.com/questions/29711668/perlin-noise-generation
 static int numX = 512, numY = 512, numOctaves = 3, primeIndex = 0;

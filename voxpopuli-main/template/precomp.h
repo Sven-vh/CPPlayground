@@ -80,6 +80,10 @@ using namespace std;
 #define NOIME
 #include "windows.h"
 
+//#define SCRWIDTH	1920
+//#define SCRHEIGHT	1017
+#define SCRWIDTH	1920
+#define SCRHEIGHT	1017
 #define HDR 0
 
 // aligned memory allocations
@@ -384,4 +388,7 @@ public:
 #include "Lines.h"
 #include "GameOfLife.h"
 #include "Dots.h"
+#include "Maze.h"
+#include "Wolfram.h"
+#include "Verlet.h"
 // EOF

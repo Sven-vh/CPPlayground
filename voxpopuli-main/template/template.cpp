@@ -84,10 +84,12 @@ void ErrorCallback(int, const char* description) {
 }
 
 void SwitchApp(TheApp* newApp) {
+	Surface* oldScreen;
+	oldScreen = app->screen;
 	app->Shutdown();
 	delete app;
 	app = newApp;
-	app->screen = new Surface(SCRWIDTH, SCRHEIGHT);
+	app->screen = oldScreen;
 	app->Init();
 }
 
@@ -128,7 +130,7 @@ void main() {
 	glfwSetCharCallback(window, CharEventCallback);
 	// initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) FatalError("gladLoadGLLoader failed.");
-	glfwSwapInterval(0);
+	glfwSwapInterval(2);
 	// prepare OpenGL state
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
@@ -160,7 +162,7 @@ void main() {
 #else
 	Surface* screen = new Surface(SCRWIDTH, SCRHEIGHT);
 #endif
-	app = new Dots();
+	app = new Verlet();
 #if 0
 	// deserizalize
 	FILE* f = fopen("appstate.dat", "rb");
@@ -357,6 +359,15 @@ void main() {
 					}
 					if (ImGui::MenuItem("Renderer")) {
 						SwitchApp(new Renderer());
+					}
+					if (ImGui::MenuItem("Maze")) {
+						SwitchApp(new Maze());
+					}
+					if (ImGui::MenuItem("Wolfram")) {
+						SwitchApp(new Wolfram());
+					}
+					if (ImGui::MenuItem("Verlet")) {
+						SwitchApp(new Verlet());
 					}
 					ImGui::EndMenu();
 				}

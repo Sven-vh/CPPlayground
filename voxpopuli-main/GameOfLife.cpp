@@ -4,8 +4,8 @@
 #define ON float4(0.4f, 0.6f, 0.8f, 1.0f)
 #define OFF float4(0.75f, 0.75f, 0.75f, 1.0f)
 #else
-#define ON 0x6699CC
-#define OFF 0xC0C0C0
+#define ON 0xFFFFFFFF
+#define OFF 0
 #endif
 // -----------------------------------------------------------
 // Initialize the renderer
@@ -17,7 +17,7 @@ void GameOfLife::Init() {
 	oldScreen = new Surface(SCRWIDTH, SCRHEIGHT);
 #endif
 	//randomize the screen with on and off cells
-	RandomizeScreen();
+	//RandomizeScreen();
 }
 
 // -----------------------------------------------------------

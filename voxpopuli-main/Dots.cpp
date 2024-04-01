@@ -19,7 +19,7 @@ void Dots::Tick(float deltaTime) {
 	deltaTime /= 100.0f;
 
 	Timer t;
-	UpdateAnts(deltaTime);
+	UpdateAnts256(deltaTime);
 	updateAntsTime = t.elapsed();
 
 	t.reset();
@@ -34,7 +34,7 @@ void Dots::Tick(float deltaTime) {
 	//PerformanceReport(t);
 }
 
-void Dots::UpdateAnts(const float deltaTime) {
+void Dots::UpdateAnts256(const float deltaTime) {
 #if SIMD
 	const __m256 width = _mm256_set1_ps((SCRWIDTH - 1));
 	const __m256 height = _mm256_set1_ps((SCRHEIGHT - 1));
@@ -58,22 +58,25 @@ void Dots::UpdateAnts(const float deltaTime) {
 		__m256 xPos = _mm256_load_ps(&xPositions[i]);
 		__m256 yPos = _mm256_load_ps(&yPositions[i]);
 
-		if (wander) {
+		if (wander) {// 6-7ms
 			//float2 random = RandomInsideUnitCircle();
 			//float x = xDesiredDirections[i] + random.x * WanderStrength;
 			//float y = yDesiredDirections[i] + random.y * WanderStrength;
 			//float length = sqrt(x * x + y * y);
 			//xDesiredDirections[i] = x / length;
 			//yDesiredDirections[i] = y / length;
-			//const int index = Rand(iterations) - 1;
 
-			__m256 xDir = _mm256_add_ps(_mm256_set1_ps(xDesiredDirections[i]), _mm256_mul_ps(_mm256_sub_ps(RandomFloatSIMD(), half), wanderStrength));
-			__m256 yDir = _mm256_add_ps(_mm256_set1_ps(yDesiredDirections[i]), _mm256_mul_ps(_mm256_sub_ps(RandomFloatSIMD(), half), wanderStrength));
+			//changing RandomFloatSIMD256() to _mm256_set1_ps(1.0f) will make it 3ms per frame...
+
+			__m256 xRandom = RandomFloatSIMD256();
+			__m256 yRandom = RandomFloatSIMD256();
+			__m256 xDir = _mm256_add_ps(_mm256_load_ps(&xDesiredDirections[i]), _mm256_mul_ps(_mm256_sub_ps(xRandom, half), wanderStrength));
+			__m256 yDir = _mm256_add_ps(_mm256_load_ps(&yDesiredDirections[i]), _mm256_mul_ps(_mm256_sub_ps(yRandom, half), wanderStrength));
 			__m256 length = _mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(xDir, xDir), _mm256_mul_ps(yDir, yDir)));
 			xDirResult = _mm256_div_ps(xDir, length);
 			yDirResult = _mm256_div_ps(yDir, length);
 
-		} else {
+		} else {// 3ms
 			//float dx = mousePos.x - xPositions[i];
 			//float dy = mousePos.y - yPositions[i];
 			//float length = sqrt(dx * dx + dy * dy);
@@ -98,10 +101,13 @@ void Dots::UpdateAnts(const float deltaTime) {
 		__m256 xDesVel = _mm256_mul_ps(xDirResult, maxSpeed);
 		__m256 yDesVel = _mm256_mul_ps(yDirResult, maxSpeed);
 
+		__m256 xVelOld = _mm256_load_ps(&xVelocities[i]);
+		__m256 yVelOld = _mm256_load_ps(&yVelocities[i]);
+
 		//float xDesSteer = (xDesVel - xVelocities[i]) * SteerStrength;
 		//float yDesSteer = (yDesVel - yVelocities[i]) * SteerStrength;
-		__m256 xDesSteer = _mm256_mul_ps(_mm256_sub_ps(xDesVel, xDirResult), steerStrength);
-		__m256 yDesSteer = _mm256_mul_ps(_mm256_sub_ps(yDesVel, yDirResult), steerStrength);
+		__m256 xDesSteer = _mm256_mul_ps(_mm256_sub_ps(xDesVel, xVelOld), steerStrength);
+		__m256 yDesSteer = _mm256_mul_ps(_mm256_sub_ps(yDesVel, yVelOld), steerStrength);
 
 		//float length = sqrt(xDesSteer * xDesSteer + yDesSteer * yDesSteer);
 		//float clampedLength = min(length, SteerStrength);
@@ -122,29 +128,22 @@ void Dots::UpdateAnts(const float deltaTime) {
 		//float velScale = (velLength > 0.0f) ? (clampedVelLength / velLength) : 0.0f;
 		//xVelocities[i] = xVel * velScale;
 		//yVelocities[i] = yVel * velScale;
-		__m256 xVelOld = _mm256_set1_ps(xVelocities[i]);
-		__m256 yVelOld = _mm256_set1_ps(yVelocities[i]);
+
 		__m256 xVel = _mm256_add_ps(xVelOld, _mm256_mul_ps(xAcc, deltaTimeSIMD));
 		__m256 yVel = _mm256_add_ps(yVelOld, _mm256_mul_ps(yAcc, deltaTimeSIMD));
-		__m256 velLength = _mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(xVel, xVel), _mm256_mul_ps(yVel, yVel)));
-		__m256 clampedVelLength = _mm256_min_ps(velLength, maxSpeed);
-		__m256 velScale = _mm256_div_ps(clampedVelLength, velLength);
-		__m256 newXVel = _mm256_mul_ps(xVel, velScale);
-		__m256 newYVel = _mm256_mul_ps(yVel, velScale);
-		_mm256_store_ps(&xVelocities[i], newXVel);
-		_mm256_store_ps(&yVelocities[i], newYVel);
+		//__m256 velLength = _mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(xVel, xVel), _mm256_mul_ps(yVel, yVel)));
+		//__m256 clampedVelLength = _mm256_min_ps(velLength, maxSpeed);
+		//__m256 velScale = _mm256_div_ps(clampedVelLength, velLength);
+		//__m256 newXVel = _mm256_mul_ps(xVel, velScale);
+		//__m256 newYVel = _mm256_mul_ps(yVel, velScale);
+		_mm256_store_ps(&xVelocities[i], xVel);
+		_mm256_store_ps(&yVelocities[i], yVel);
 
 
 		//xPositions[i] += xVelocities[i] * deltaTime;
 		//yPositions[i] += yVelocities[i] * deltaTime;
-		__m256 xresult = _mm256_add_ps(xPos, _mm256_mul_ps(xVelOld, deltaTimeSIMD));
-		__m256 yresult = _mm256_add_ps(yPos, _mm256_mul_ps(yVelOld, deltaTimeSIMD));
-
-
-		//if (xPositions[i] > SCRWIDTH) xPositions[i] = xPositions[i] - SCRWIDTH;
-		//if (xPositions[i] < 0) xPositions[i] = SCRWIDTH - xPositions[i];
-		//if (yPositions[i] > SCRHEIGHT) yPositions[i] = yPositions[i] - SCRHEIGHT;
-		//if (yPositions[i] < 0) yPositions[i] = SCRHEIGHT - yPositions[i];
+		__m256 xresult = _mm256_add_ps(xPos, _mm256_mul_ps(xVel, deltaTimeSIMD));
+		__m256 yresult = _mm256_add_ps(yPos, _mm256_mul_ps(yVel, deltaTimeSIMD));
 
 		// Adjust x positions with wrapping
 		__m256 mask_greater_width = _mm256_cmp_ps(xresult, width, _CMP_GE_OS); // x >= SCRWIDTH
@@ -166,8 +165,8 @@ void Dots::UpdateAnts(const float deltaTime) {
 
 
 		//angles[i] = atan2(yVel, xVel);
-		__m256 angle = _mm256_atan2_ps(newYVel, newXVel);
-		_mm256_store_ps(&angles[i], angle);
+		//__m256 angle = _mm256_atan2_ps(newYVel, newXVel);
+		//_mm256_store_ps(&angles[i], angle);
 	}
 #else
 	for (int i = 0; i < ants.size(); i++) {
@@ -198,14 +197,159 @@ void Dots::UpdateAnts(const float deltaTime) {
 #endif
 }
 
+//void Dots::UpdateAnts512(const float deltaTime) {
+//	const __m512 width = _mm512_set1_ps((SCRWIDTH - 1));
+//	const __m512 height = _mm512_set1_ps((SCRHEIGHT - 1));
+//	const __m512 zero = _mm512_set1_ps(0.0f);
+//	const __m512 half = _mm512_set1_ps(0.5f);
+//	const __m512 maxSpeed = _mm512_set1_ps(MaxSpeed);
+//	const __m512 steerStrength = _mm512_set1_ps(SteerStrength);
+//	const __m512 wanderStrength = _mm512_set1_ps(WanderStrength);
+//	const __m512 deltaTimeSIMD = _mm512_set1_ps(deltaTime);
+//	const __m512 mousePosX = _mm512_set1_ps(mousePos.x);
+//	const __m512 mousePosY = _mm512_set1_ps(mousePos.y);
+//	const __m512 epsilon = _mm512_set1_ps(FLT_EPSILON);
+//	const int iterations = numAnts >> 4;
+//
+//	//#pragma omp parallel for schedule(dynamic)
+//	for (int i = 0; i < numAnts; i += 16) {
+//
+//		//__m512 xDir, yDir, xVel, yVel, xAcc, yAcc, xPos, yPos;
+//
+//		__m512 xDirResult, yDirResult;
+//		__m512 xPos = _mm512_load_ps(&xPositions[i]);
+//		__m512 yPos = _mm512_load_ps(&yPositions[i]);
+//
+//		if (wander) {
+//			//float2 random = RandomInsideUnitCircle();
+//			//float x = xDesiredDirections[i] + random.x * WanderStrength;
+//			//float y = yDesiredDirections[i] + random.y * WanderStrength;
+//			//float length = sqrt(x * x + y * y);
+//			//xDesiredDirections[i] = x / length;
+//			//yDesiredDirections[i] = y / length;
+//			//const int index = Rand(iterations) - 1;
+//
+//			__m512 xDir = _mm512_add_ps(_mm512_set1_ps(xDesiredDirections[i]), _mm512_mul_ps(_mm512_sub_ps(RandomFloatSIMD512(), half), wanderStrength));
+//			__m512 yDir = _mm512_add_ps(_mm512_set1_ps(yDesiredDirections[i]), _mm512_mul_ps(_mm512_sub_ps(RandomFloatSIMD512(), half), wanderStrength));
+//			__m512 length = _mm512_sqrt_ps(_mm512_add_ps(_mm512_mul_ps(xDir, xDir), _mm512_mul_ps(yDir, yDir)));
+//			xDirResult = _mm512_div_ps(xDir, length);
+//			yDirResult = _mm512_div_ps(yDir, length);
+//
+//		} else {
+//			//float dx = mousePos.x - xPositions[i];
+//			//float dy = mousePos.y - yPositions[i];
+//			//float length = sqrt(dx * dx + dy * dy);
+//			//xDesiredDirections[i] = dx / length;
+//			//yDesiredDirections[i] = dy / length;
+//
+//			__m512 dx = _mm512_sub_ps(mousePosX, xPos);
+//			__m512 dy = _mm512_sub_ps(mousePosY, yPos);
+//			//dx = _mm512_sub_ps(zero, dx);
+//			//dy = _mm512_sub_ps(zero, dy);
+//			__m512 length = _mm512_sqrt_ps(_mm512_add_ps(_mm512_mul_ps(dx, dx), _mm512_mul_ps(dy, dy)));
+//			length = _mm512_add_ps(length, epsilon);
+//			xDirResult = _mm512_div_ps(dx, length);
+//			yDirResult = _mm512_div_ps(dy, length);
+//		}
+//
+//		_mm512_store_ps(&xDesiredDirections[i], xDirResult);
+//		_mm512_store_ps(&yDesiredDirections[i], yDirResult);
+//
+//		//float xDesVel = xDesiredDirections[i] * MaxSpeed;
+//		//float yDesVel = yDesiredDirections[i] * MaxSpeed;
+//		__m512 xDesVel = _mm512_mul_ps(xDirResult, maxSpeed);
+//		__m512 yDesVel = _mm512_mul_ps(yDirResult, maxSpeed);
+//
+//		//float xDesSteer = (xDesVel - xVelocities[i]) * SteerStrength;
+//		//float yDesSteer = (yDesVel - yVelocities[i]) * SteerStrength;
+//		__m512 xDesSteer = _mm512_mul_ps(_mm512_sub_ps(xDesVel, xDirResult), steerStrength);
+//		__m512 yDesSteer = _mm512_mul_ps(_mm512_sub_ps(yDesVel, yDirResult), steerStrength);
+//
+//		//float length = sqrt(xDesSteer * xDesSteer + yDesSteer * yDesSteer);
+//		//float clampedLength = min(length, SteerStrength);
+//		//float scale = (length > 0.0f) ? (clampedLength / length) : 0.0f;
+//		//float xAcc = xDesSteer * scale;
+//		//float yAcc = yDesSteer * scale;
+//		__m512 length = _mm512_sqrt_ps(_mm512_add_ps(_mm512_mul_ps(xDesSteer, xDesSteer), _mm512_mul_ps(yDesSteer, yDesSteer)));
+//		__m512 clampedLength = _mm512_min_ps(length, steerStrength);
+//		__m512 scale = _mm512_div_ps(clampedLength, _mm512_add_ps(length, epsilon));
+//		__m512 xAcc = _mm512_mul_ps(xDesSteer, scale);
+//		__m512 yAcc = _mm512_mul_ps(yDesSteer, scale);
+//
+//
+//		//float xVel = xVelocities[i] + xAcc * deltaTime;
+//		//float yVel = yVelocities[i] + yAcc * deltaTime;
+//		//float velLength = sqrt(xVel * xVel + yVel * yVel);
+//		//float clampedVelLength = min(velLength, MaxSpeed);
+//		//float velScale = (velLength > 0.0f) ? (clampedVelLength / velLength) : 0.0f;
+//		//xVelocities[i] = xVel * velScale;
+//		//yVelocities[i] = yVel * velScale;
+//		__m512 xVelOld = _mm512_set1_ps(xVelocities[i]);
+//		__m512 yVelOld = _mm512_set1_ps(yVelocities[i]);
+//		__m512 xVel = _mm512_add_ps(xVelOld, _mm512_mul_ps(xAcc, deltaTimeSIMD));
+//		__m512 yVel = _mm512_add_ps(yVelOld, _mm512_mul_ps(yAcc, deltaTimeSIMD));
+//		__m512 velLength = _mm512_sqrt_ps(_mm512_add_ps(_mm512_mul_ps(xVel, xVel), _mm512_mul_ps(yVel, yVel)));
+//		__m512 clampedVelLength = _mm512_min_ps(velLength, maxSpeed);
+//		__m512 velScale = _mm512_div_ps(clampedVelLength, velLength);
+//		__m512 newXVel = _mm512_mul_ps(xVel, velScale);
+//		__m512 newYVel = _mm512_mul_ps(yVel, velScale);
+//		_mm512_store_ps(&xVelocities[i], newXVel);
+//		_mm512_store_ps(&yVelocities[i], newYVel);
+//
+//
+//		//xPositions[i] += xVelocities[i] * deltaTime;
+//		//yPositions[i] += yVelocities[i] * deltaTime;
+//		__m512 xresult = _mm512_add_ps(xPos, _mm512_mul_ps(xVelOld, deltaTimeSIMD));
+//		__m512 yresult = _mm512_add_ps(yPos, _mm512_mul_ps(yVelOld, deltaTimeSIMD));
+//
+//		// Adjust x positions with wrapping
+//		__mmask16  mask_greater_width = _mm512_cmp_ps_mask(xresult, width, _CMP_GE_OS); // x >= SCRWIDTH
+//		__mmask16  mask_less_zero = _mm512_cmp_ps_mask(xresult, zero, _CMP_LT_OS); // x < 0
+//		__m512 wrapped_greater_width = _mm512_sub_ps(xresult, width); // Wrap around for x >= SCRWIDTH
+//		__m512 wrapped_less_zero = _mm512_add_ps(xresult, width); // Wrap around for x < 0
+//		__m512 resultX = _mm512_mask_blend_ps(mask_greater_width, xresult, wrapped_greater_width); // Apply wrap for x >= SCRWIDTH
+//		resultX = _mm512_mask_blend_ps(mask_less_zero, resultX, wrapped_less_zero); // Apply wrap for x < 0
+//		_mm512_store_ps(&xPositions[i], resultX); // Store the final x positions
+//
+//		// Adjust y positions with wrapping
+//		__mmask16 mask_greater_height = _mm512_cmp_ps_mask(yresult, height, _CMP_GE_OS); // y >= SCRHEIGHT
+//		__mmask16 mask_less_zero_y = _mm512_cmp_ps_mask(yresult, zero, _CMP_LT_OS); // y < 0
+//		__m512 wrapped_greater_height = _mm512_sub_ps(yresult, height); // Wrap around for y >= SCRHEIGHT
+//		__m512 wrapped_less_zero_y = _mm512_add_ps(yresult, height); // Wrap around for y < 0
+//		__m512 resultY = _mm512_mask_blend_ps(mask_greater_height, yresult, wrapped_greater_height); // Apply wrap for y >= SCRHEIGHT
+//		resultY = _mm512_mask_blend_ps(mask_less_zero_y, resultY, wrapped_less_zero_y); // Apply wrap for y < 0
+//		_mm512_store_ps(&yPositions[i], resultY); // Store the final y positions
+//
+//
+//		//angles[i] = atan2(yVel, xVel);
+//		__m512 angle = _mm512_atan2_ps(newYVel, newXVel);
+//		_mm512_store_ps(&angles[i], angle);
+//	}
+//}
+
 void Dots::RenderAnts() {
 #if SIMD
 	const float2 size = float2(antSize);
 	const uint color = RGBF32_to_RGB8(&antColor);
-	for (int i = 0; i < numAnts; i++) {
+	for (uint i = 0; i < numAnts; i++) {
 		const int x = xPositions[i];
 		const int y = yPositions[i];
 
+#if 0
+		//color based on velocity
+		const float2 vel = float2(xVelocities[i], yVelocities[i]);
+		const float velLength = length(vel);
+		const float velLengthNormalized = 1.0f - velLength / MaxSpeed;
+		const float4 floatColor = lerp(antColor, backgroundColor, velLengthNormalized);
+		color = RGBF32_to_RGB8(&floatColor);
+#elif 0
+		//random color
+		uint rSeed = i * 2654435761u;
+		uint gSeed = i * 265324535761u;
+		uint bSeed = i * 12313u;
+		const float4 floatColor = float3(RandomFloat(rSeed), RandomFloat(gSeed), RandomFloat(bSeed));
+		color = RGBF32_to_RGB8(&floatColor);
+#endif
 		//const int index = x + y * SCRWIDTH;
 		screen->pixels[x + y * SCRWIDTH] = color;
 	}
@@ -237,8 +381,8 @@ void Dots::SubtractScreen(const float deltaTime) {
 			uint evaporatedColor = RGBF32_to_RGB8(&evaporatedValue);
 			screen->Plot(x, y, evaporatedColor);
 #endif
+		}
 	}
-}
 }
 
 void Dots::SpawnAnts() {
@@ -249,9 +393,9 @@ void Dots::SpawnAnts() {
 		yPositions.push_back(SCRHEIGHT * 0.5f);
 		xVelocities.push_back(0.0f);
 		yVelocities.push_back(0.0f);
-		xDesiredDirections.push_back(0.0f);
-		yDesiredDirections.push_back(0.0f);
-		angles.push_back(0.0f);
+		xDesiredDirections.push_back((RandomFloat() - 0.5f) * 2.0f);
+		yDesiredDirections.push_back((RandomFloat() - 0.5f) * 2.0f);
+		//angles.push_back(0.0f);
 		numAnts++;
 #else
 		Ant ant;
@@ -259,10 +403,12 @@ void Dots::SpawnAnts() {
 		ants.push_back(ant);
 #endif
 	}
-#if SIMD
-	//initialize the random points
-	GeneratePointsSIMD(xPoints, yPoints, numAnts >> 3);
-#endif
+
+	//randoms.clear();
+	////fill the random seed array
+	//for (int i = 0; i < numAnts; i += 8) {
+	//	randoms.push_back(RandomFloatSIMD256());
+	//}
 }
 
 void Dots::ClearAnts() {
@@ -273,7 +419,7 @@ void Dots::ClearAnts() {
 	yVelocities.clear();
 	xDesiredDirections.clear();
 	yDesiredDirections.clear();
-	angles.clear();
+	//angles.clear();
 	numAnts = 0;
 #else
 	ants.clear();
@@ -291,7 +437,18 @@ void Dots::UI() {
 	ImGui::Text("Render Ants Time: %f ms", renderAntsTime * 1000.0f);
 
 #if SIMD
-	ImGui::Text("Ant Count: %d", numAnts);
+	//Imgui text with thousands separator
+	std::string numAntsStr = std::to_string(numAnts);
+	std::string formattedNumAnts = "";
+	int count = 0;
+	for (int i = numAntsStr.size() - 1; i >= 0; i--) {
+		formattedNumAnts = numAntsStr[i] + formattedNumAnts;
+		count++;
+		if (count % 3 == 0 && i != 0) {
+			formattedNumAnts = "," + formattedNumAnts;
+		}
+	}
+	ImGui::Text("Ant Count: %s", formattedNumAnts.c_str());
 #else
 	ImGui::Text("Ant Count: %d", ants.size());
 #endif

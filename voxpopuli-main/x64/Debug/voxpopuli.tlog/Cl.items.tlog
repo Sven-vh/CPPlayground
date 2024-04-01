@@ -9,6 +9,7 @@ C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_impl_o
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_tables.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\imgui_tables.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_widgets.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\imgui_widgets.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Lines.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Lines.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Maze.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Maze.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\SineWave.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\SineWave.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\opencl.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\opencl.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\opengl.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\opengl.obj
@@ -17,3 +18,5 @@ C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\surface.cpp;C
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\template.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\template.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\tmpl8math.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\tmpl8math.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\renderer.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\renderer.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Verlet.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Wolfram.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Wolfram.obj

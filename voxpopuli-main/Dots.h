@@ -21,7 +21,7 @@ public:
 	int2 mousePos;
 	bool mouseDown = false;
 private:
-	int spawnCount = 300'000;
+	int spawnCount = 300000;
 
 #if SIMD
 	int numAnts = 0;
@@ -31,8 +31,8 @@ private:
 	std::vector<float> yVelocities;
 	std::vector<float> xDesiredDirections;
 	std::vector<float> yDesiredDirections;
-	std::vector<float> angles;
-	std::vector<__m256> xPoints, yPoints;
+	std::vector<__m256> randoms;
+	//std::vector<float> angles;
 #else
 	std::vector<Ant> ants;
 #endif
@@ -58,5 +58,6 @@ private:
 	void ClearAnts();
 	void RenderAnts();
 	void SubtractScreen(const float deltaTime);
-	void UpdateAnts(const float deltaTime);
+	void UpdateAnts256(const float deltaTime);
+	//void UpdateAnts512(const float deltaTime);
 };

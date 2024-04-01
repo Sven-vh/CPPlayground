@@ -52,7 +52,7 @@ Surface::~Surface() {
 }
 
 void Surface::Clear(uint c) {
-#if 0
+#if 1
 	//slow
 	// WARNING: not the fastest way to do this.
 	const int s = width * height;
@@ -117,7 +117,7 @@ void Surface::Plot(const int x, const int y, const  uint c) {
 }
 
 uint Tmpl8::Surface::GetPixel(int x, int y) {
-	if (x < 0 || y < 0 || x >= width || y >= height) return -1;
+	if (x < 0 || y < 0 || x >= width || y >= height) return 0;
 	return pixels[x + y * width];
 }
 

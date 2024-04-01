@@ -127,9 +127,11 @@ float RandomFloat();
 float RandomFloat(uint& seed);
 float Rand(float range);
 float2 RandomInsideUnitCircle();
-void RandomInsideUnitCircleSIMD(__m256& xValues, __m256& yValues);
-__m256 RandomFloatSIMD();
-void GeneratePointsSIMD(std::vector<__m256>& xPoints, std::vector<__m256>& yPoints, int requiredCount);
+__m256i RandomUInt256();
+__m256 RandomFloat256();
+__m256 RandomFloatSIMD256();
+__m512 RandomFloatSIMD512();
+void RandomInsideUnitCircleSIMD(__m256& xPoints, __m256& yPoints);
 
 // math
 inline float fminf(const float a, const float b) { return a < b ? a : b; }

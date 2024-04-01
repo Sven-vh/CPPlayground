@@ -137,6 +137,7 @@
     <ClCompile Include="lib\imgui\imgui_tables.cpp" />
     <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Lines.cpp" />
+    <ClCompile Include="Maze.cpp" />
     <ClCompile Include="SineWave.cpp" />
     <ClCompile Include="template\opencl.cpp" />
     <ClCompile Include="template\opengl.cpp" />
@@ -148,6 +149,8 @@
     </ClCompile>
     <ClCompile Include="template\tmpl8math.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="Verlet.cpp" />
+    <ClCompile Include="Wolfram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ant.h" />
@@ -164,6 +167,7 @@
     <ClInclude Include="lib\imgui\imstb_textedit.h" />
     <ClInclude Include="lib\imgui\imstb_truetype.h" />
     <ClInclude Include="Lines.h" />
+    <ClInclude Include="Maze.h" />
     <ClInclude Include="SineWave.h" />
     <ClInclude Include="template\camera.h" />
     <ClInclude Include="template\common.h" />
@@ -174,6 +178,8 @@
     <ClInclude Include="template\surface.h" />
     <ClInclude Include="template\tmpl8math.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="Verlet.h" />
+    <ClInclude Include="Wolfram.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="template\LICENSE" />

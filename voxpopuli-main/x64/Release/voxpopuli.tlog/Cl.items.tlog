@@ -9,6 +9,7 @@ C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_impl_o
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_tables.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\imgui_tables.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_widgets.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\imgui_widgets.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Lines.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\Lines.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Maze.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\Maze.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\SineWave.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\SineWave.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\opencl.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\opencl.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\opengl.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\opengl.obj
@@ -17,3 +18,5 @@ C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\surface.cpp;C
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\template.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\template.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\tmpl8math.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\tmpl8math.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\renderer.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\renderer.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\Verlet.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Wolfram.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Release\Wolfram.obj
