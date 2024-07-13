@@ -4,8 +4,10 @@
 // Initialize the renderer
 // -----------------------------------------------------------
 void Lines::Init() {
-
+	GenerateLines();
 }
+
+
 
 // -----------------------------------------------------------
 // Main application tick function - Executed once per frame
@@ -15,19 +17,8 @@ void Lines::Tick(float deltaTime) {
 
 	screen->Clear(0);
 
-
-	//fill the points vector with points on the edges of the screen
-	for (int i = 0; i < SCRWIDTH / factor; i++) {
-		int2 a = int2(i * factor, 0);
-		int2 b = int2(i * factor, SCRHEIGHT);
-		screen->Line(a.x, a.y, mousePos.x, mousePos.y, 0xffffff);
-		screen->Line(b.x, b.y, mousePos.x, mousePos.y, 0xffffff);
-	}
-	for (int i = 0; i < SCRHEIGHT / factor; i++) {
-		int2 a = int2(0, i * factor);
-		int2 b = int2(SCRWIDTH, i * factor);
-		screen->Line(a.x, a.y, mousePos.x, mousePos.y, 0xffffff);
-		screen->Line(b.x, b.y, mousePos.x, mousePos.y, 0xffffff);
+	for (line l : points) {
+		screen->Line(l.from.x, l.from.y, l.to.x, l.to.y, 0xFFFFFFFF);
 	}
 
 	PerformanceReport(t);
@@ -39,7 +30,10 @@ void Lines::Tick(float deltaTime) {
 void Lines::UI() {
 	//Imgui for all the settings with dragInt and dragFloat
 	ImGui::Begin("Settings");
-	ImGui::DragFloat("Factor", &factor, 0.1f);
+	ImGui::DragInt("Line count", &lineCount, 1, 1, 100);
+	if (ImGui::Button("Generate")) {
+		GenerateLines();
+	}
 }
 
 // -----------------------------------------------------------
@@ -47,6 +41,23 @@ void Lines::UI() {
 // -----------------------------------------------------------
 void Lines::Shutdown() {
 
+}
+
+void Lines::GenerateLines() {
+	// generate random lines
+	points.clear();
+	line startLine;
+	startLine.from = RandomFloat() > 0.5f ? float2(0, RandomFloat() * SCRHEIGHT) : float2(SCRWIDTH, RandomFloat() * SCRHEIGHT);
+	startLine.to = RandomFloat() > 0.5f ? float2(0, RandomFloat() * SCRHEIGHT) : float2(SCRWIDTH, RandomFloat() * SCRHEIGHT);
+	points.push_back(startLine);
+
+	for (int i = 0; i < lineCount-1; i++) {
+		line newLine;
+		newLine.from = points.back().GetRandomPointOnLine();
+		//somewhere on the side of the screen
+		newLine.to = RandomFloat() > 0.5f ? float2(0, RandomFloat() * SCRHEIGHT) : float2(SCRWIDTH, RandomFloat() * SCRHEIGHT);
+		points.push_back(newLine);
+	}
 }
 
 void Lines::PerformanceReport(Timer& t) {

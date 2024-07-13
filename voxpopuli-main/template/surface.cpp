@@ -132,6 +132,68 @@ void Surface::Circle(const int x, const int y, const int r, const uint c) {
 	}
 }
 
+void Tmpl8::Surface::Hexagon(const int x, const int y, const int size, const uint c) {
+	// Calculate the vertices of the hexagon for a flat-top orientation
+	int vertices[6][2]; // Store x,y coordinates of the vertices
+	for (int i = 0; i < 6; i++) {
+		// 60 degrees apart for each vertex, starting from 0 degrees (flat top)
+		float angle = PI / 180 * (60 * i); // Start from 0 degrees for flat-top
+		vertices[i][0] = x + size * cos(angle);
+		vertices[i][1] = y + size * sin(angle);
+	}
+
+	// Draw lines between the vertices to create an outline
+	for (int i = 0; i < 6; i++) {
+		int j = (i + 1) % 6; // Connect each vertex to the next
+		Line(vertices[i][0], vertices[i][1], vertices[j][0], vertices[j][1], c);
+	}
+}
+
+void Tmpl8::Surface::HexagonFilled(const int x, const int y, const int size, const uint c) {
+	// Calculate the vertices of the hexagon for a flat-top orientation
+	int vertices[6][2]; // Store x, y coordinates of the vertices
+	for (int i = 0; i < 6; i++) {
+		// 60 degrees apart for each vertex, starting from 0 degrees (flat top)
+		float angle = PI / 180 * (60 * i); // Start from 0 degrees for flat-top
+		vertices[i][0] = x + size * cos(angle);
+		vertices[i][1] = y + size * sin(angle);
+	}
+
+	// Draw filled hexagon using scanline fill
+	int minY = vertices[0][1], maxY = vertices[0][1];
+	for (int i = 1; i < 6; i++) {
+		if (vertices[i][1] < minY) minY = vertices[i][1];
+		if (vertices[i][1] > maxY) maxY = vertices[i][1];
+	}
+
+	for (int scanY = minY; scanY <= maxY; scanY++) {
+		int minX = INT_MAX, maxX = INT_MIN;
+		for (int i = 0; i < 6; i++) {
+			int j = (i + 1) % 6;
+			int x1 = vertices[i][0];
+			int y1 = vertices[i][1];
+			int x2 = vertices[j][0];
+			int y2 = vertices[j][1];
+
+			if ((scanY >= y1 && scanY <= y2) || (scanY >= y2 && scanY <= y1)) {
+				if (y2 != y1) {
+					float frac = (float)(scanY - y1) / (y2 - y1);
+					int intersectX = x1 + frac * (x2 - x1);
+					if (intersectX < minX) minX = intersectX;
+					if (intersectX > maxX) maxX = intersectX;
+				}
+			}
+		}
+
+		if (minX <= maxX) {
+			for (int px = minX; px <= maxX; px++) {
+				Plot(px, scanY, c);
+			}
+		}
+	}
+}
+
+
 void Surface::Box(int x1, int y1, int x2, int y2, uint c) {
 	Line((float)x1, (float)y1, (float)x2, (float)y1, c);
 	Line((float)x2, (float)y1, (float)x2, (float)y2, c);
@@ -454,6 +516,67 @@ void Tmpl8::FLoatSurface::Circle(int x, int y, int r, float4 color) {
 		int h = (int)sqrtf((float)(r2 - dx * dx));
 		for (int dy = -h; dy <= h; dy++) {
 			Plot(x + dx, y + dy, color);
+		}
+	}
+}
+
+void Tmpl8::FLoatSurface::Hexagon(const int x, const int y, const int size, const uint c) {
+	// Calculate the vertices of the hexagon for a flat-top orientation
+	int vertices[6][2]; // Store x,y coordinates of the vertices
+	for (int i = 0; i < 6; i++) {
+		// 60 degrees apart for each vertex, starting from 0 degrees (flat top)
+		float angle = PI / 180 * (60 * i); // Start from 0 degrees for flat-top
+		vertices[i][0] = x + size * cos(angle);
+		vertices[i][1] = y + size * sin(angle);
+	}
+
+	// Draw lines between the vertices to create an outline
+	for (int i = 0; i < 6; i++) {
+		int j = (i + 1) % 6; // Connect each vertex to the next
+		Line(vertices[i][0], vertices[i][1], vertices[j][0], vertices[j][1], c);
+	}
+}
+
+void Tmpl8::FLoatSurface::HexagonFilled(const int x, const int y, const int size, const uint c) {
+	// Calculate the vertices of the hexagon for a flat-top orientation
+	int vertices[6][2]; // Store x, y coordinates of the vertices
+	for (int i = 0; i < 6; i++) {
+		// 60 degrees apart for each vertex, starting from 0 degrees (flat top)
+		float angle = PI / 180 * (60 * i); // Start from 0 degrees for flat-top
+		vertices[i][0] = x + size * cos(angle);
+		vertices[i][1] = y + size * sin(angle);
+	}
+
+	// Draw filled hexagon using scanline fill
+	int minY = vertices[0][1], maxY = vertices[0][1];
+	for (int i = 1; i < 6; i++) {
+		if (vertices[i][1] < minY) minY = vertices[i][1];
+		if (vertices[i][1] > maxY) maxY = vertices[i][1];
+	}
+
+	for (int scanY = minY; scanY <= maxY; scanY++) {
+		int minX = INT_MAX, maxX = INT_MIN;
+		for (int i = 0; i < 6; i++) {
+			int j = (i + 1) % 6;
+			int x1 = vertices[i][0];
+			int y1 = vertices[i][1];
+			int x2 = vertices[j][0];
+			int y2 = vertices[j][1];
+
+			if ((scanY >= y1 && scanY <= y2) || (scanY >= y2 && scanY <= y1)) {
+				if (y2 != y1) {
+					float frac = (float)(scanY - y1) / (y2 - y1);
+					int intersectX = x1 + frac * (x2 - x1);
+					if (intersectX < minX) minX = intersectX;
+					if (intersectX > maxX) maxX = intersectX;
+				}
+			}
+		}
+
+		if (minX <= maxX) {
+			for (int px = minX; px <= maxX; px++) {
+				Plot(px, scanY, c);
+			}
 		}
 	}
 }

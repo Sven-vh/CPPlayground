@@ -2,6 +2,8 @@
 #include "Ant.h"
 #define SIMD 1
 
+#define LUT_SIZE 360
+
 class Dots : public TheApp {
 public:
 	// game flow methods
@@ -31,11 +33,15 @@ private:
 	std::vector<float> yVelocities;
 	std::vector<float> xDesiredDirections;
 	std::vector<float> yDesiredDirections;
+	std::vector<UINT8> rColors;
+	std::vector<UINT8> gColors;
+	std::vector<UINT8> bColors;
 	std::vector<__m256> randoms;
 	//std::vector<float> angles;
 #else
 	std::vector<Ant> ants;
 #endif
+	uint colorLUT[LUT_SIZE];
 
 	float4 antColor = float4(1.0f);
 	//0xFF977D5E as a float4
@@ -59,5 +65,6 @@ private:
 	void RenderAnts();
 	void SubtractScreen(const float deltaTime);
 	void UpdateAnts256(const float deltaTime);
+	void InitColorLUT();
 	//void UpdateAnts512(const float deltaTime);
 };

@@ -86,6 +86,10 @@ using namespace std;
 #define SCRHEIGHT	1017
 #define HDR 0
 
+#define LEFT_CLICK 0
+#define RIGHT_CLICK 1
+#define MIDDLE_CLICK 2
+
 // aligned memory allocations
 #ifdef _MSC_VER
 #define ALIGN( x ) __declspec( align( x ) )
@@ -345,7 +349,7 @@ inline uint RGBF32_to_RGB8( const float4* v )
 #endif
 }
 
-inline float4 RGB8_to_RGBF32(uint c) 	{
+inline float4 RGB8_to_RGBF32(const uint c) 	{
 	return make_float4( (float)((c >> 16) & 255) / 255.0f, (float)((c >> 8) & 255) / 255.0f, (float)(c & 255) / 255.0f, 1.0f );
 }
 
@@ -380,6 +384,9 @@ public:
 	void Tick() {}
 };
 
+
+#include "ImGuiExtensions.h"
+
 #include "scene.h"
 #include "camera.h"
 #include "EmptyApp.h"
@@ -391,4 +398,8 @@ public:
 #include "Maze.h"
 #include "Wolfram.h"
 #include "Verlet.h"
+#include "ColorWheel.h"
+#include "Hexcells.h"
+#include "Fractal.h"
+#include "Shaders.h"
 // EOF

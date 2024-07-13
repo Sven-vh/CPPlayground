@@ -7,6 +7,7 @@
 #pragma comment( linker, "/subsystem:windows /ENTRY:mainCRTStartup" )
 
 using namespace Tmpl8;
+#define CUSTOM_SHADER 1
 
 // Enable usage of dedicated GPUs in notebooks
 // Note: this does cause the linker to produce a .lib and .exp file;
@@ -84,7 +85,11 @@ void ErrorCallback(int, const char* description) {
 }
 
 void SwitchApp(TheApp* newApp) {
+#if HDR
+	FLoatSurface* oldScreen;
+#else
 	Surface* oldScreen;
+#endif
 	oldScreen = app->screen;
 	app->Shutdown();
 	delete app;
@@ -109,6 +114,7 @@ void main() {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_STENCIL_BITS, GL_FALSE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE /* easier :) */);
+	glfwWindowHint(GLFW_MAXIMIZED, GL_TRUE);
 #ifdef FULLSCREEN
 	window = glfwCreateWindow(SCRWIDTH, SCRHEIGHT, "Tmpl8RT", glfwGetPrimaryMonitor(), 0);
 #else
@@ -130,7 +136,7 @@ void main() {
 	glfwSetCharCallback(window, CharEventCallback);
 	// initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) FatalError("gladLoadGLLoader failed.");
-	glfwSwapInterval(2);
+	glfwSwapInterval(0);
 	// prepare OpenGL state
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
@@ -162,7 +168,7 @@ void main() {
 #else
 	Surface* screen = new Surface(SCRWIDTH, SCRHEIGHT);
 #endif
-	app = new Verlet();
+	app = new Shaders();
 #if 0
 	// deserizalize
 	FILE* f = fopen("appstate.dat", "rb");
@@ -196,7 +202,17 @@ void main() {
 	ImGuiIO& io = ImGui::GetIO();
 	io.IniFilename = "./imgui.ini";
 	// done, enter main loop
-#if 1
+
+#if CUSTOM_SHADER
+	Shader* shader = new Shader("fragment.glsl", "vertex.glsl", false);
+
+	Shaders* shadersClass = static_cast<Shaders*>(app);
+	if (shadersClass) {
+		shadersClass->currentShader = shader;
+		printf("Shader loaded\n");
+	}
+
+#elif 1
 	// basic shader: apply gamma correction
 	Shader* shader = new Shader(
 		"#version 330\nin vec4 p;\nin vec2 t;out vec2 u;void main(){u=t;gl_Position=p;}",
@@ -369,6 +385,15 @@ void main() {
 					if (ImGui::MenuItem("Verlet")) {
 						SwitchApp(new Verlet());
 					}
+					if (ImGui::MenuItem("Hexcells")) {
+						SwitchApp(new Hexcells());
+					}
+					if (ImGui::MenuItem("Fractal")) {
+						SwitchApp(new Fractal());
+					}
+					if (ImGui::MenuItem("Shaders")) {
+						SwitchApp(new Shaders());
+					}
 					ImGui::EndMenu();
 				}
 				ImGui::EndMainMenuBar();
@@ -407,7 +432,7 @@ void main() {
 	ImGui::DestroyContext();
 	glfwDestroyWindow(window);
 	glfwTerminate();
-}
+	}
 
 // Jobmanager implementation
 DWORD JobThreadProc(LPVOID lpParameter) {

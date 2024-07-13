@@ -39,7 +39,11 @@ namespace Tmpl8 {
 		}
 
 		inline bool IsWall(const int2 pos) {
+#if HDR
+			float3 pixel = screen->pixels[pos.y * SCRWIDTH + pos.x];
+#else
 			uint pixel = screen->pixels[pos.y * SCRWIDTH + pos.x];
+#endif
 			return pixel == WALL;
 		}
 	};

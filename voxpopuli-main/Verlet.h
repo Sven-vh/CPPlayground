@@ -1,10 +1,31 @@
 #pragma once
 
+struct Particle {
+	float2 position;
+	float2 previousPosition;
+	float2 acceleration;
+	uint color;
+	float size;
+
+	bool operator==(const Particle& other) const {
+		return this == &other;
+	}
+
+	bool operator!=(const Particle& other) const {
+		return this != &other;
+	}
+};
+
+struct Cell {
+	std::vector<int> particles;
+};
+
 namespace Tmpl8 {
 	class Verlet : public TheApp {
 	public:
 		// game flow methods
 		void Init();
+		void ResizeGrid();
 		void Tick(float deltaTime);
 		void PerformanceReport(Timer& t);
 		void UI();
@@ -21,36 +42,54 @@ namespace Tmpl8 {
 		bool mouseDown = false;
 	private:
 
+		bool circleConstraint = false;
+		bool paused = false;
+		bool drawGrid = false;
+
 		float tickRate = 60.0f;
 		float totalTime = 0.0f;
 
+		float drawParticle = 0.0f;
+		float drawGridTime = 0.0f;
+
+		float updateGrid = 0.0f;
+		float applyGravity = 0.0f;
+		float applyConstraints = 0.0f;
+		float resolveCollisions = 0.0f;
+		float updatePositions = 0.0f;
+
 		int subSteps = 8;
 
-		int spawnCount = 100;
-		float spawnSize = 5.0f;
+		int spawnCount = 1000;
+		float particleSize = 5.0f;
+		float drawingSizeMultiplier = 1.1f;
 
-		int particleCount;
-		std::vector<float2> currentPositions;
-		std::vector<float2> previousPositions;
-		std::vector<float2> accelerations;
-		std::vector<float> sizes;
-		std::vector<uint> colors;
+		std::vector<Particle> particles;
 
 		float2 gravity = float2(0, 0.001f);
+		float mouseForce = 0.001f;
+		float maxVelocity = 2.0f;
+		float maxColorVelocity = 0.4f;
 
 		float2 constraintPosition = float2(SCRWIDTH / 2, SCRHEIGHT / 2);
 		float constraintRadius = 300.0f;
 
+		int2 gridDimensions;
+		std::vector<std::vector<Cell>> grid;
+
 		void Update(const float deltaTime);
 		void UpdatePositions(const float deltaTime);
-		void ApplyGravity();
 		void ApplyConstraints();
 		void ResolveCollisions();
+		void UpdateGrid();
 
+		void CheckCollisions(Cell& cellA, Cell& cellB);
+		void SolveCollision(Particle& a, Particle& b) const;
 		void DrawParticles();
+		void DrawGrids();
 
 		void ClearParticles();
 		void SpawnParticles();
-		void SpawnParticle(const float2& position, const float2& velocity, const float size, const uint color);
+		void SpawnParticle(const float2& position, const float2& velocity, const uint color);
 	};
 } // namespace Tmpl8

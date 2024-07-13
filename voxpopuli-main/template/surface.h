@@ -64,6 +64,8 @@ namespace Tmpl8 {
 		void LoadFromFile(const char* file);
 		void CopyTo(Surface* dst, int x, int y);
 		void Circle(const int x, const int y, const int r, const uint c);
+		void Hexagon(const int x, const int y, const int size, const uint c);
+		void HexagonFilled(const int x, const int y, const int size, const uint c);
 		void Box(int x1, int y1, int x2, int y2, uint color);
 		void Bar(int x1, int y1, int x2, int y2, uint color);
 		void Rect(int x1, int y1, int x2, int y2, float rotation, uint color);
@@ -97,6 +99,8 @@ namespace Tmpl8 {
 		void Box(int x1, int y1, int x2, int y2, float4 color);
 		void Bar(int x1, int y1, int x2, int y2, float4 color);
 		void Circle(int x, int y, int r, float4 color);
+		void Hexagon(const int x, const int y, const int size, const uint c);
+		void HexagonFilled(const int x, const int y, const int size, const uint c);
 		void Rect(int x1, int y1, int x2, int y2, float rotation, float4 color);
 		void CopyTo(FLoatSurface* dst, int x, int y);
 		// attributes

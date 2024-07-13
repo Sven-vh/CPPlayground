@@ -1,7 +1,10 @@
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Ant.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Ant.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\ColorWheel.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\ColorWheel.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Dots.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Dots.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\EmptyApp.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\EmptyApp.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Fractal.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Fractal.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\GameOfLife.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\GameOfLife.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Hexcells.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Hexcells.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\imgui.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_draw.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\imgui_draw.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_impl_glfw.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\imgui_impl_glfw.obj
@@ -10,6 +13,7 @@ C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_tables
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\lib\imgui\imgui_widgets.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\imgui_widgets.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Lines.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Lines.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Maze.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Maze.obj
+C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Shaders.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\Shaders.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\SineWave.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\SineWave.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\opencl.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\opencl.obj
 C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\template\opengl.cpp;C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\Debug\opengl.obj

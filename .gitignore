@@ -31,3 +31,7 @@
 *.out
 *.app
 *.ipch
+/voxpopuli-main/.vs
+/voxpopuli-main/.vs
+*.ipch
+voxpopuli-main/.vs/tmpl_2024-vox/v17/ipch/fd0e4e550fd7d0e8.ipch

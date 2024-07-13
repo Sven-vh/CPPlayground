@@ -68,6 +68,18 @@
     <ClCompile Include="Verlet.cpp">
       <Filter>Apps\Verlet</Filter>
     </ClCompile>
+    <ClCompile Include="ColorWheel.cpp">
+      <Filter>Apps\ColorWheel</Filter>
+    </ClCompile>
+    <ClCompile Include="Hexcells.cpp">
+      <Filter>Apps\Hexcells</Filter>
+    </ClCompile>
+    <ClCompile Include="Fractal.cpp">
+      <Filter>Apps\Fractal</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders.cpp">
+      <Filter>Apps\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="template\camera.h">
@@ -149,6 +161,21 @@
     <ClInclude Include="Verlet.h">
       <Filter>Apps\Verlet</Filter>
     </ClInclude>
+    <ClInclude Include="ColorWheel.h">
+      <Filter>Apps\ColorWheel</Filter>
+    </ClInclude>
+    <ClInclude Include="Hexcells.h">
+      <Filter>Apps\Hexcells</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExtensions.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="Fractal.h">
+      <Filter>Apps\Fractal</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.h">
+      <Filter>Apps\Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template">
@@ -187,10 +214,26 @@
     <Filter Include="Apps\Verlet">
       <UniqueIdentifier>{31b05d4e-2e44-4bb9-a2bf-403e8b0e9d7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Apps\ColorWheel">
+      <UniqueIdentifier>{3a1d3aac-353a-4521-b388-cb9584893bf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Hexcells">
+      <UniqueIdentifier>{d0372dff-b9db-41c6-9c60-cc6c68fb6af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Fractal">
+      <UniqueIdentifier>{3b434012-2e0c-4490-9b1f-e83bc8539d5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Shaders">
+      <UniqueIdentifier>{cd9dcb7e-fdca-468d-900f-2a68ccf8f466}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="template\LICENSE">
       <Filter>template</Filter>
     </None>
+    <None Include="vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="fragment.glsl" />
   </ItemGroup>
 </Project>

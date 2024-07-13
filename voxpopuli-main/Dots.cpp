@@ -1,5 +1,5 @@
 #include "precomp.h"
-
+#include <cstdint>
 // -----------------------------------------------------------
 // Initialize the renderer
 // -----------------------------------------------------------
@@ -8,6 +8,7 @@ void Dots::Init() {
 	SetThreadAffinityMask(GetCurrentThread(), mask);
 
 	SpawnAnts();
+	InitColorLUT();
 	uint color = RGBF32_to_RGB8(&backgroundColor);
 	screen->Clear(color);
 }
@@ -197,6 +198,34 @@ void Dots::UpdateAnts256(const float deltaTime) {
 #endif
 }
 
+void Dots::InitColorLUT() {
+	for (int i = 0; i < LUT_SIZE; ++i) {
+		float hue = i / static_cast<float>(LUT_SIZE); // Hue between 0 and 1
+		float r, g, b;
+		float h = hue * 6.0f;
+		int j = int(h);
+		float f = h - j;
+		float q = 1.0f - f;
+
+		switch (j % 6) {
+		case 0: r = 1.0f, g = f, b = 0.0f; break;
+		case 1: r = q, g = 1.0f, b = 0.0f; break;
+		case 2: r = 0.0f, g = 1.0f, b = f; break;
+		case 3: r = 0.0f, g = q, b = 1.0f; break;
+		case 4: r = f, g = 0.0f, b = 1.0f; break;
+		case 5: r = 1.0f, g = 0.0f, b = q; break;
+		}
+
+		// Convert to 0-255 range
+		uint8_t red = static_cast<uint8_t>(r * 255);
+		uint8_t green = static_cast<uint8_t>(g * 255);
+		uint8_t blue = static_cast<uint8_t>(b * 255);
+
+		// Pack RGB values into a single uint32_t (ARGB format)
+		colorLUT[i] = (0xFF << 24) | (red << 16) | (green << 8) | blue;
+	}
+}
+
 //void Dots::UpdateAnts512(const float deltaTime) {
 //	const __m512 width = _mm512_set1_ps((SCRWIDTH - 1));
 //	const __m512 height = _mm512_set1_ps((SCRHEIGHT - 1));
@@ -327,43 +356,90 @@ void Dots::UpdateAnts256(const float deltaTime) {
 //	}
 //}
 
+#if HDR
+inline void safe_add(float4& x, const float4& y) {
+	x += y;
+}
+#else
+inline void safe_add(uint& x, const uint& y) {
+	if (0xffffff - x < y) {
+		x = 0xffffff; // Handle overflow, this could be an error or a max value
+	} else {
+		x += y;
+	}
+}
+#endif
+
 void Dots::RenderAnts() {
-#if SIMD
+
+#if 1
+	//old code
+	const float2 size = float2(antSize);
+#if HDR
+	const float4 color = antColor;
+#else
+	const uint color = RGBF32_to_RGB8(&antColor);
+#endif
+	for (uint i = 0; i < numAnts; i++) {
+		const int x = xPositions[i];
+		const int y = yPositions[i];
+
+		//const float2 vel = float2(xVelocities[i], yVelocities[i]);
+		//const float2 dir = normalize(vel);
+		//const float4 floatColor = float4(dir.x, dir.y, 0.0f, 1.0f);
+		//const uint color = RGBF32_to_RGB8(&floatColor);
+		const int index = x + y * SCRWIDTH;
+		safe_add(screen->pixels[index], color);
+	}
+
+#elif 0
+	std::vector<UINT8> rColors;
+	std::vector<UINT8> gColors;
+	std::vector<UINT8> bColors;
+	//new code with SIMD
+	for (int i = 0; i < numAnts; i += 8) {
+		//const float2 vel = float2(xVelocities[i], yVelocities[i]);
+		//const float2 dir = normalize(vel);
+		//const float4 floatColor = float4(dir.x, dir.y, 0.0f, 1.0f);
+		//const uint color = RGBF32_to_RGB8(&floatColor);
+
+		const __m256 xVel = _mm256_load_ps(&xVelocities[i]);
+		const __m256 yVel = _mm256_load_ps(&yVelocities[i]);
+		const __m256 xDir = _mm256_div_ps(xVel, _mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(xVel, xVel), _mm256_mul_ps(yVel, yVel))));
+		const __m256 yDir = _mm256_div_ps(yVel, _mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(xVel, xVel), _mm256_mul_ps(yVel, yVel))));
+		const __m256 r = _mm256_mul_ps(xDir, _mm256_set1_ps(0.5f));
+		const __m256 g = _mm256_mul_ps(yDir, _mm256_set1_ps(0.5f));
+		const __m256 b = _mm256_setzero_ps();
+		__m256i rInt = _mm256_cvtps_epi32(_mm256_mul_ps(r, _mm256_set1_ps(255.0f)));
+		__m256i gInt = _mm256_cvtps_epi32(_mm256_mul_ps(g, _mm256_set1_ps(255.0f)));
+		__m256i bInt = _mm256_cvtps_epi32(_mm256_mul_ps(b, _mm256_set1_ps(255.0f)));
+
+
+	}
+
+	for (uint i = 0; i < numAnts; i++) {
+		const int x = xPositions[i];
+		const int y = yPositions[i];
+		const uint color = (rColors[i] << 16) | (gColors[i] << 8) | bColors[i];
+		screen->pixels[x + y * SCRWIDTH] = color;
+	}
+
+#else
+	//old code
 	const float2 size = float2(antSize);
 	const uint color = RGBF32_to_RGB8(&antColor);
 	for (uint i = 0; i < numAnts; i++) {
 		const int x = xPositions[i];
 		const int y = yPositions[i];
 
-#if 0
-		//color based on velocity
 		const float2 vel = float2(xVelocities[i], yVelocities[i]);
-		const float velLength = length(vel);
-		const float velLengthNormalized = 1.0f - velLength / MaxSpeed;
-		const float4 floatColor = lerp(antColor, backgroundColor, velLengthNormalized);
-		color = RGBF32_to_RGB8(&floatColor);
-#elif 0
-		//random color
-		uint rSeed = i * 2654435761u;
-		uint gSeed = i * 265324535761u;
-		uint bSeed = i * 12313u;
-		const float4 floatColor = float3(RandomFloat(rSeed), RandomFloat(gSeed), RandomFloat(bSeed));
-		color = RGBF32_to_RGB8(&floatColor);
-#endif
-		//const int index = x + y * SCRWIDTH;
+		const float2 dir = normalize(vel);
+		const float angle = atan2(dir.x, dir.y);
+		int index = static_cast<int>((angle / (2.0 * PI)) * LUT_SIZE) % LUT_SIZE;
+		if (index < 0) index += LUT_SIZE; // Ensure the index is positive
+		const uint color = colorLUT[index];
 		screen->pixels[x + y * SCRWIDTH] = color;
-	}
-
-#else
-	const float2 size = float2(antSize);
-	for (int i = 0; i < ants.size(); i++) {
-		const Ant& ant = ants[i];
-		const float2 pos = ant.position;
-
-		uint color = RGBF32_to_RGB8(&antColor);
-		screen->Plot(pos.x, pos.y, color);
-
-	}
+}
 #endif
 }
 
@@ -395,6 +471,9 @@ void Dots::SpawnAnts() {
 		yVelocities.push_back(0.0f);
 		xDesiredDirections.push_back((RandomFloat() - 0.5f) * 2.0f);
 		yDesiredDirections.push_back((RandomFloat() - 0.5f) * 2.0f);
+		rColors.push_back(0);
+		gColors.push_back(0);
+		bColors.push_back(0);
 		//angles.push_back(0.0f);
 		numAnts++;
 #else
@@ -419,6 +498,10 @@ void Dots::ClearAnts() {
 	yVelocities.clear();
 	xDesiredDirections.clear();
 	yDesiredDirections.clear();
+	rColors.clear();
+	gColors.clear();
+	bColors.clear();
+
 	//angles.clear();
 	numAnts = 0;
 #else
@@ -436,9 +519,12 @@ void Dots::UI() {
 	ImGui::Text("Clear Screen Time: %f ms", clearScreenTime * 1000.0f);
 	ImGui::Text("Render Ants Time: %f ms", renderAntsTime * 1000.0f);
 
-#if SIMD
 	//Imgui text with thousands separator
+#if SIMD
 	std::string numAntsStr = std::to_string(numAnts);
+#else
+	std::string numAntsStr = std::to_string(ants.size());
+#endif
 	std::string formattedNumAnts = "";
 	int count = 0;
 	for (int i = numAntsStr.size() - 1; i >= 0; i--) {
@@ -449,9 +535,6 @@ void Dots::UI() {
 		}
 	}
 	ImGui::Text("Ant Count: %s", formattedNumAnts.c_str());
-#else
-	ImGui::Text("Ant Count: %d", ants.size());
-#endif
 
 	ImGui::DragInt("Ant Count", &spawnCount, 1, 0, 1000000);
 	if (ImGui::Button("Spawn Ants")) {

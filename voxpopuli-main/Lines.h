@@ -1,5 +1,13 @@
 #pragma once
 
+struct line {
+	float2 from, to;
+
+	float2 GetRandomPointOnLine() {
+		return float2(from.x + (to.x - from.x) * RandomFloat(), from.y + (to.y - from.y) * RandomFloat());
+	}
+};
+
 class Lines : public TheApp {
 public:
 	// game flow methods
@@ -19,7 +27,9 @@ public:
 	int2 mousePos;
 
 private:
-	std::vector<float2> points;
-	float factor = 2.0f;
+	std::vector<line> points;
+	int lineCount = 10;
+
+	void GenerateLines();
 };
 

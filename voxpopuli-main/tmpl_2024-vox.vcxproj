@@ -123,9 +123,12 @@
   <!-- END Custom section -->
   <ItemGroup>
     <ClCompile Include="Ant.cpp" />
+    <ClCompile Include="ColorWheel.cpp" />
     <ClCompile Include="Dots.cpp" />
     <ClCompile Include="EmptyApp.cpp" />
+    <ClCompile Include="Fractal.cpp" />
     <ClCompile Include="GameOfLife.cpp" />
+    <ClCompile Include="Hexcells.cpp" />
     <ClCompile Include="lib\imgui\imgui.cpp" />
     <ClCompile Include="lib\imgui\imgui_demo.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -138,6 +141,7 @@
     <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Lines.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="SineWave.cpp" />
     <ClCompile Include="template\opencl.cpp" />
     <ClCompile Include="template\opengl.cpp" />
@@ -154,9 +158,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ant.h" />
+    <ClInclude Include="ColorWheel.h" />
     <ClInclude Include="Dots.h" />
     <ClInclude Include="EmptyApp.h" />
+    <ClInclude Include="Fractal.h" />
     <ClInclude Include="GameOfLife.h" />
+    <ClInclude Include="Hexcells.h" />
+    <ClInclude Include="ImGuiExtensions.h" />
     <ClInclude Include="lib\imgui\imconfig.h" />
     <ClInclude Include="lib\imgui\imgui.h" />
     <ClInclude Include="lib\imgui\imgui_impl_glfw.h" />
@@ -168,6 +176,7 @@
     <ClInclude Include="lib\imgui\imstb_truetype.h" />
     <ClInclude Include="Lines.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Shaders.h" />
     <ClInclude Include="SineWave.h" />
     <ClInclude Include="template\camera.h" />
     <ClInclude Include="template\common.h" />
@@ -183,6 +192,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="template\LICENSE" />
+    <None Include="vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="fragment.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

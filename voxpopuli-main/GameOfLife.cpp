@@ -116,11 +116,8 @@ void GameOfLife::Shutdown() {
 void GameOfLife::RandomizeScreen() {
 	for (int i = 0; i < SCRWIDTH; i++) {
 		for (int j = 0; j < SCRHEIGHT; j++) {
-			if (rand() % 2 == 0) {
-				screen->Plot(i, j, ON);
-			} else {
-				screen->Plot(i, j, OFF);
-			}
+			float r = RandomFloat();
+			screen->Plot(i, j, RandomFloat() <= 0.2f ? ON : OFF);
 		}
 	}
 }
