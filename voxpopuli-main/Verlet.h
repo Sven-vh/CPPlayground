@@ -1,20 +1,22 @@
 #pragma once
 
-struct Particle {
-	float2 position;
-	float2 previousPosition;
-	float2 acceleration;
-	uint color;
-	float size;
+namespace Tmpl8 {
+	struct VerletParticle {
+		float2 position;
+		float2 previousPosition;
+		float2 acceleration;
+		uint color;
+		uint dummy;
 
-	bool operator==(const Particle& other) const {
-		return this == &other;
-	}
+		bool operator==(const VerletParticle& other) const {
+			return this == &other;
+		}
 
-	bool operator!=(const Particle& other) const {
-		return this != &other;
-	}
-};
+		bool operator!=(const VerletParticle& other) const {
+			return this != &other;
+		}
+	};
+}
 
 struct Cell {
 	std::vector<int> particles;
@@ -64,7 +66,7 @@ namespace Tmpl8 {
 		float particleSize = 5.0f;
 		float drawingSizeMultiplier = 1.1f;
 
-		std::vector<Particle> particles;
+		std::vector<VerletParticle> particles;
 
 		float2 gravity = float2(0, 0.001f);
 		float mouseForce = 0.001f;
@@ -84,7 +86,7 @@ namespace Tmpl8 {
 		void UpdateGrid();
 
 		void CheckCollisions(Cell& cellA, Cell& cellB);
-		void SolveCollision(Particle& a, Particle& b) const;
+		void SolveCollision(VerletParticle& a, VerletParticle& b) const;
 		void DrawParticles();
 		void DrawGrids();
 

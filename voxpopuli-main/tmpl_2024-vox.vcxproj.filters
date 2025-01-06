@@ -80,6 +80,18 @@
     <ClCompile Include="Shaders.cpp">
       <Filter>Apps\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="SandSimulation.cpp">
+      <Filter>Apps\SandSimulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawing.cpp">
+      <Filter>Apps\CircleDrawing</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleFill.cpp">
+      <Filter>Apps\CircleFill</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorCircle.cpp">
+      <Filter>Apps\ColorCircle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="template\camera.h">
@@ -176,6 +188,18 @@
     <ClInclude Include="Shaders.h">
       <Filter>Apps\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="SandSimulation.h">
+      <Filter>Apps\SandSimulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawing.h">
+      <Filter>Apps\CircleDrawing</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleFill.hpp">
+      <Filter>Apps\CircleFill</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorCircle.h">
+      <Filter>Apps\ColorCircle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template">
@@ -225,6 +249,18 @@
     </Filter>
     <Filter Include="Apps\Shaders">
       <UniqueIdentifier>{cd9dcb7e-fdca-468d-900f-2a68ccf8f466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\SandSimulation">
+      <UniqueIdentifier>{5306bb7d-96f6-4900-bedf-4984a9cc8141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\CircleDrawing">
+      <UniqueIdentifier>{f5660544-7b38-4245-b50d-1a92bf0083f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\CircleFill">
+      <UniqueIdentifier>{7fa8cfa2-02ae-414f-bad8-75460e71ed20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\ColorCircle">
+      <UniqueIdentifier>{fb7d4cde-fe08-4f1e-8de1-e67b092b29f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -180,34 +180,47 @@ void Tmpl8::Verlet::ApplyConstraints() {
 			}
 		}
 	} else {
+#if 1
 		//only loop through the particles that are in the cells on the edge of the screen
+
 		for (int i = 0; i < gridDimensions.x; i++) {
 			for (int j = 0; j < gridDimensions.y; j++) {
 				if (i == 0 || i == gridDimensions.x - 1 || j == 0 || j == gridDimensions.y - 1) {
 					Cell& cell = grid[i][j];
 					for (const int index : cell.particles) {
-						Particle& p = particles[index];
+						VerletParticle& p = particles[index];
 						const float2& pos = p.position;
 						if (pos.x < particleSize) {
 							p.position.x = particleSize;
-							p.previousPosition.x = particleSize;
 						} else if (pos.x >= SCRWIDTH - particleSize) {
 							p.position.x = SCRWIDTH - particleSize;
-							p.previousPosition.x = SCRWIDTH - particleSize;
 						}
 						if (pos.y < particleSize) {
 							p.position.y = particleSize;
-							p.previousPosition.y = particleSize;
 						} else if (pos.y > SCRHEIGHT - particleSize) {
 							p.position.y = SCRHEIGHT - particleSize;
-							p.previousPosition.y = SCRHEIGHT - particleSize;
 						}
 					}
 				}
 			}
 		}
-	}
+#else
+		for (auto& p : particles) {
+			const float2& pos = p.position;
+			if (pos.x < particleSize) {
+				p.position.x = particleSize;
+			} else if (pos.x >= SCRWIDTH - particleSize) {
+				p.position.x = SCRWIDTH - particleSize;
+			}
+			if (pos.y < particleSize) {
+				p.position.y = particleSize;
+			} else if (pos.y > SCRHEIGHT - particleSize) {
+				p.position.y = SCRHEIGHT - particleSize;
+			}
 
+		}
+#endif
+	}
 }
 
 void Tmpl8::Verlet::UpdatePositions(const float deltaTime) {
@@ -232,7 +245,7 @@ void Tmpl8::Verlet::UpdatePositions(const float deltaTime) {
 	}
 }
 
-void Tmpl8::Verlet::SolveCollision(Particle& a, Particle& b) const {
+void Tmpl8::Verlet::SolveCollision(VerletParticle& a, VerletParticle& b) const {
 	const float2 axis = a.position - b.position;
 	const float distance = length(axis);
 	const float size = particleSize + particleSize;
@@ -269,7 +282,7 @@ void Tmpl8::Verlet::DrawParticles() {
 		for (int j = 0; j < gridDimensions.y; j++) {
 			Cell& cell = grid[i][j];
 			for (const int index : cell.particles) {
-				Particle& p = particles[index];
+				VerletParticle& p = particles[index];
 				float4 color;
 				float speed = length(p.position - p.previousPosition);
 				float ratio = speed / maxColorVelocity;
@@ -313,7 +326,7 @@ void Tmpl8::Verlet::SpawnParticles() {
 			startPos = float2((i % width) * particleSize * 2.0f, (i / height) * particleSize * 2.0f);
 			startPos += float2(particleSize) + float2(particleSize) * random;
 		}
-		Particle p;
+		VerletParticle p;
 		p.position = startPos;
 		p.previousPosition = startPos;
 		p.acceleration = float2(0, 0);
@@ -375,7 +388,7 @@ void Tmpl8::Verlet::UpdateGrid() {
 	}
 
 	for (int i = 0; i < particles.size(); i++) {
-		const Particle& p = particles[i];
+		const VerletParticle& p = particles[i];
 		int x = static_cast<int>(p.position.x / particleSize / 2.0f);
 		int y = static_cast<int>(p.position.y / particleSize / 2.0f);
 		x = std::max(0, std::min(x, gridDimensions.x - 1));
@@ -393,9 +406,9 @@ void Tmpl8::Verlet::UpdateGrid() {
 
 void Tmpl8::Verlet::CheckCollisions(Cell& cellA, Cell& cellB) {
 	for (const int indexA : cellA.particles) {
-		Particle& pA = particles[indexA];
+		VerletParticle& pA = particles[indexA];
 		for (const int indexB : cellB.particles) {
-			Particle& pB = particles[indexB];
+			VerletParticle& pB = particles[indexB];
 			if (pA != pB) {
 				SolveCollision(pA, pB);
 			}
@@ -404,7 +417,7 @@ void Tmpl8::Verlet::CheckCollisions(Cell& cellA, Cell& cellB) {
 }
 
 void Tmpl8::Verlet::SpawnParticle(const float2& position, const float2& velocity, const uint color) {
-	Particle p;
+	VerletParticle p;
 	p.position = position;
 	p.previousPosition = position;
 	p.acceleration = float2(0, 0);

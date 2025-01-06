@@ -50,7 +50,7 @@ void Dots::UpdateAnts256(const float deltaTime) {
 	const __m256 epsilon = _mm256_set1_ps(FLT_EPSILON);
 	const int iterations = numAnts >> 3;
 
-	//#pragma omp parallel for schedule(dynamic)
+	#pragma omp parallel for schedule(dynamic)
 	for (int i = 0; i < numAnts; i += 8) {
 
 		//__m256 xDir, yDir, xVel, yVel, xAcc, yAcc, xPos, yPos;

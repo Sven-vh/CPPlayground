@@ -61,12 +61,16 @@ namespace Tmpl8 {
 		void Line(float x1, float y1, float x2, float y2, uint c);
 		void Plot(const  int x, const int y, const  uint c);
 		uint GetPixel(int x, int y);
+		uint GetPixel(float u, float v);
+		uint GetPixel(double u, double v);
 		void LoadFromFile(const char* file);
 		void CopyTo(Surface* dst, int x, int y);
 		void Circle(const int x, const int y, const int r, const uint c);
+		void FastBigCircle(const int x, const int y, const int r, const uint c);
 		void Hexagon(const int x, const int y, const int size, const uint c);
 		void HexagonFilled(const int x, const int y, const int size, const uint c);
 		void Box(int x1, int y1, int x2, int y2, uint color);
+		void BoxFilled(int x1, int y1, int x2, int y2, uint color);
 		void Bar(int x1, int y1, int x2, int y2, uint color);
 		void Rect(int x1, int y1, int x2, int y2, float rotation, uint color);
 		// attributes

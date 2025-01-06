@@ -18,4 +18,7 @@ public:
 	// data members
 	int2 mousePos;
 	Shader* currentShader;
+
+private:
+	int max_iter = 100;
 };

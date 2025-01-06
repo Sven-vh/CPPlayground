@@ -1,6 +1,6 @@
 #pragma once
 
-class Fractal : public TheApp {
+class Circles : public TheApp {
 public:
 	// game flow methods
 	void Init();
@@ -17,5 +17,23 @@ public:
 	void KeyDown(int key) { /* implement if you want to handle keys */ }
 	// data members
 	int2 mousePos;
+
+private:
+	int minRadius = 100;
+	int maxRadius = 500;
+	float stepSize = 10.0f;
+
+	float lineWidth = 1.0f;
+
+	float waveFrequency = 12;
+	float waveAmplitude = 12;
+	float waveSpeed = 4;
+
+	float sinePower = 3.0f;
+	float animationSpeed = 0.5f;
+
+	float maxDistance = 500.0f;
+
+	float time = 0;
 };
 

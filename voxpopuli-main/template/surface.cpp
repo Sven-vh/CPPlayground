@@ -121,12 +121,46 @@ uint Tmpl8::Surface::GetPixel(int x, int y) {
 	return pixels[x + y * width];
 }
 
+uint Tmpl8::Surface::GetPixel(float u, float v) {
+	int x = (int)(u * width);
+	int y = (int)(v * height);
+	if (x < 0 || y < 0 || x >= width || y >= height) return 0;
+	return pixels[x + y * width];
+}
+
+uint Tmpl8::Surface::GetPixel(double u, double v) {
+	int x = (int)(u * width);
+	int y = (int)(v * height);
+	if (x < 0 || y < 0 || x >= width || y >= height) return 0;
+	return pixels[x + y * width];
+}
+
 //fast circle plot
 void Surface::Circle(const int x, const int y, const int r, const uint c) {
 	int r2 = r * r;
 	for (int dx = -r; dx <= r; dx++) {
 		int h = (int)sqrtf((float)(r2 - dx * dx));
 		for (int dy = -h; dy <= h; dy++) {
+			Plot(x + dx, y + dy, c);
+		}
+	}
+}
+
+void Tmpl8::Surface::FastBigCircle(const int x, const int y, const int r, const uint c) {
+	int r2 = r * r;
+
+	// Calculate the horizontal bounds within the screen limits
+	int xMin = std::max(-r, -x);
+	int xMax = std::min(r, SCRWIDTH - x - 1);
+
+	for (int dx = xMin; dx <= xMax; dx++) {
+		int h = (int)sqrtf((float)(r2 - dx * dx));
+
+		// Calculate the vertical bounds within the screen limits
+		int yMin = std::max(-h, -y);
+		int yMax = std::min(h, SCRHEIGHT - y - 1);
+
+		for (int dy = yMin; dy <= yMax; dy++) {
 			Plot(x + dx, y + dy, c);
 		}
 	}
@@ -199,6 +233,23 @@ void Surface::Box(int x1, int y1, int x2, int y2, uint c) {
 	Line((float)x2, (float)y1, (float)x2, (float)y2, c);
 	Line((float)x1, (float)y2, (float)x2, (float)y2, c);
 	Line((float)x1, (float)y1, (float)x1, (float)y2, c);
+}
+
+void Tmpl8::Surface::BoxFilled(int x1, int y1, int x2, int y2, uint color) {
+	// a function to draw a filled rectangle with boundary checks
+	if (x1 > x2) { int t = x1; x1 = x2; x2 = t; }
+	if (y1 > y2) { int t = y1; y1 = y2; y2 = t; }
+	if (x2 < 0 || x1 >= width || y2 < 0 || y1 >= height) return;
+	if (x1 < 0) x1 = 0;
+	if (x2 >= width) x2 = width - 1;
+	if (y1 < 0) y1 = 0;
+	if (y2 >= height) y2 = height - 1;
+	// draw the filled rectangle
+	uint* a = x1 + y1 * width + pixels;
+	for (int y = y1; y <= y2; y++) {
+		for (int x = 0; x <= (x2 - x1); x++) a[x] = color;
+		a += width;
+	}
 }
 
 void Surface::Bar(int x1, int y1, int x2, int y2, uint c) {

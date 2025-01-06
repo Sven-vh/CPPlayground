@@ -26,7 +26,8 @@ namespace Tmpl8 {
 	// vector type placeholders, carefully matching OpenCL's layout and alignment
 	struct ALIGN(8) int2 {
 		int2() = default;
-		int2(const int a, const int b) : x(a), y(b) {}
+		constexpr int2(const int a, const int b) : x(a), y(b) {}
+		//int2(const int a, const int b) : x(a), y(b) {}
 		int2(const int a) : x(a), y(a) {}
 		union { struct { int x, y; }; int cell[2]; };
 		int& operator [] (const int n) { return cell[n]; }
@@ -45,6 +46,14 @@ namespace Tmpl8 {
 		float2(const int2 a) : x((float)a.x), y((float)a.y) {}
 		union { struct { float x, y; }; float cell[2]; };
 		float& operator [] (const int n) { return cell[n]; }
+	};
+	struct ALIGN(8) double2 {
+		double2() = default;
+		double2(const long double a, const long double b) : x(a), y(b) {}
+		double2(const long double a) : x(a), y(a) {}
+		double2(const int2 a) : x((long double)a.x), y((long double)a.y) {}
+		union { struct { long double x, y; }; long double cell[2]; };
+		long double& operator [] (const int n) { return cell[n]; }
 	};
 	struct int3;
 	struct ALIGN(16) int4 {
@@ -146,6 +155,12 @@ inline float2 make_float2(const float s) { return make_float2(s, s); }
 inline float2 make_float2(const float3& a) { return make_float2(a.x, a.y); }
 inline float2 make_float2(const int2& a) { return make_float2(float(a.x), float(a.y)); } // explicit casts prevent gcc warnings
 inline float2 make_float2(const uint2& a) { return make_float2(float(a.x), float(a.y)); }
+inline double2 make_double2(const long double a, const long double b) { double2 d2; d2.x = a, d2.y = b; return d2; }
+inline double2 make_double2(const float2& a) { return make_double2(long double(a.x), long double(a.y)); }
+inline double2 make_double2(const long double s) { return make_double2(s, s); }
+inline double2 make_double2(const float3& a) { return make_double2(a.x, a.y); }
+inline double2 make_double2(const int2& a) { return make_double2((long double)a.x, (long double)a.y); }
+inline double2 make_double2(const uint2& a) { return make_double2((long double)a.x, (long double)a.y); }
 inline int2 make_int2(const int a, const int b) { int2 i2; i2.x = a, i2.y = b; return i2; }
 inline int2 make_int2(const int s) { return make_int2(s, s); }
 inline int2 make_int2(const int3& a) { return make_int2(a.x, a.y); }
@@ -196,6 +211,7 @@ inline uint4 make_uint4(const int4& a) { return make_uint4(uint(a.x), uint(a.y),
 inline uchar4 make_uchar4(const uchar a, const uchar b, const uchar c, const uchar d) { uchar4 c4; c4.x = a, c4.y = b, c4.z = c, c4.w = d; return c4; }
 
 inline float2 operator-(const float2& a) { return make_float2(-a.x, -a.y); }
+inline double2 operator-(const double2& a) { return make_double2(-a.x, -a.y); }
 inline int2 operator-(const int2& a) { return make_int2(-a.x, -a.y); }
 inline float3 operator-(const float3& a) { return make_float3(-a.x, -a.y, -a.z); }
 inline int3 operator-(const int3& a) { return make_int3(-a.x, -a.y, -a.z); }
@@ -213,16 +229,31 @@ inline float2 operator+(const float2& a, const int2& b) { return make_float2(a.x
 inline float2 operator+(const float2& a, const uint2& b) { return make_float2(a.x + (float)b.x, a.y + (float)b.y); }
 inline float2 operator+(const int2& a, const float2& b) { return make_float2((float)a.x + b.x, (float)a.y + b.y); }
 inline float2 operator+(const uint2& a, const float2& b) { return make_float2((float)a.x + b.x, (float)a.y + b.y); }
+inline double2 operator+(const double2& a, const double2& b) { return make_double2(a.x + b.x, a.y + b.y); }
+inline double2 operator+(const double2& a, const int2& b) { return make_double2(a.x + (long double)b.x, a.y + (long double)b.y); }
+inline double2 operator+(const double2& a, const uint2& b) { return make_double2(a.x + (long double)b.x, a.y + (long double)b.y); }
+inline double2 operator+(const int2& a, const double2& b) { return make_double2((long double)a.x + b.x, (long double)a.y + b.y); }
+inline double2 operator+(const uint2& a, const double2& b) { return make_double2((long double)a.x + b.x, (long double)a.y + b.y); }
 inline void operator+=(float2& a, const float2& b) { a.x += b.x;	a.y += b.y; }
 inline void operator+=(float2& a, const int2& b) { a.x += (float)b.x; a.y += (float)b.y; }
 inline void operator+=(float2& a, const uint2& b) { a.x += (float)b.x; a.y += (float)b.y; }
+inline void operator+=(double2& a, const double2& b) { a.x += b.x;	a.y += b.y; }
+inline void operator+=(double2& a, const int2& b) { a.x += (long double)b.x; a.y += (long double)b.y; }
+inline void operator+=(double2& a, const uint2& b) { a.x += (long double)b.x; a.y += (long double)b.y; }
 inline float2 operator+(const float2& a, float b) { return make_float2(a.x + b, a.y + b); }
 inline float2 operator+(const float2& a, int b) { return make_float2(a.x + (float)b, a.y + (float)b); }
 inline float2 operator+(const float2& a, uint b) { return make_float2(a.x + (float)b, a.y + (float)b); }
 inline float2 operator+(float b, const float2& a) { return make_float2(a.x + b, a.y + b); }
+inline double2 operator+(const double2& a, double b) { return make_double2(a.x + b, a.y + b); }
+inline double2 operator+(const double2& a, int b) { return make_double2(a.x + (long double)b, a.y + (long double)b); }
+inline double2 operator+(const double2& a, uint b) { return make_double2(a.x + (long double)b, a.y + (long double)b); }
+inline double2 operator+(double b, const double2& a) { return make_double2(a.x + b, a.y + b); }
 inline void operator+=(float2& a, float b) { a.x += b; a.y += b; }
 inline void operator+=(float2& a, int b) { a.x += (float)b; a.y += (float)b; }
 inline void operator+=(float2& a, uint b) { a.x += (float)b;	a.y += (float)b; }
+inline void operator+=(double2& a, double b) { a.x += b; a.y += b; }
+inline void operator+=(double2& a, int b) { a.x += (long double)b; a.y += (long double)b; }
+inline void operator+=(double2& a, uint b) { a.x += (long double)b; a.y += (long double)b; }
 inline int2 operator+(const int2& a, const int2& b) { return make_int2(a.x + b.x, a.y + b.y); }
 inline void operator+=(int2& a, const int2& b) { a.x += b.x;	a.y += b.y; }
 inline int2 operator+(const int2& a, int b) { return make_int2(a.x + b, a.y + b); }
@@ -290,16 +321,31 @@ inline float2 operator-(const float2& a, const int2& b) { return make_float2(a.x
 inline float2 operator-(const float2& a, const uint2& b) { return make_float2(a.x - (float)b.x, a.y - (float)b.y); }
 inline float2 operator-(const int2& a, const float2& b) { return make_float2((float)a.x - b.x, (float)a.y - b.y); }
 inline float2 operator-(const uint2& a, const float2& b) { return make_float2((float)a.x - b.x, (float)a.y - b.y); }
+inline double2 operator-(const double2& a, const double2& b) { return make_double2(a.x - b.x, a.y - b.y); }
+inline double2 operator-(const double2& a, const int2& b) { return make_double2(a.x - (long double)b.x, a.y - (long double)b.y); }
+inline double2 operator-(const double2& a, const uint2& b) { return make_double2(a.x - (long double)b.x, a.y - (long double)b.y); }
+inline double2 operator-(const int2& a, const double2& b) { return make_double2((long double)a.x - b.x, (long double)a.y - b.y); }
+inline double2 operator-(const uint2& a, const double2& b) { return make_double2((long double)a.x - b.x, (long double)a.y - b.y); }
 inline void operator-=(float2& a, const float2& b) { a.x -= b.x;	a.y -= b.y; }
 inline void operator-=(float2& a, const int2& b) { a.x -= (float)b.x; a.y -= (float)b.y; }
 inline void operator-=(float2& a, const uint2& b) { a.x -= (float)b.x; a.y -= (float)b.y; }
+inline void operator-=(double2& a, const double2& b) { a.x -= b.x;	a.y -= b.y; }
+inline void operator-=(double2& a, const int2& b) { a.x -= (long double)b.x; a.y -= (long double)b.y; }
+inline void operator-=(double2& a, const uint2& b) { a.x -= (long double)b.x; a.y -= (long double)b.y; }
 inline float2 operator-(const float2& a, float b) { return make_float2(a.x - b, a.y - b); }
 inline float2 operator-(const float2& a, int b) { return make_float2(a.x - (float)b, a.y - (float)b); }
 inline float2 operator-(const float2& a, uint b) { return make_float2(a.x - (float)b, a.y - (float)b); }
 inline float2 operator-(float b, const float2& a) { return make_float2(b - a.x, b - a.y); }
+inline double2 operator-(const double2& a, double b) { return make_double2(a.x - b, a.y - b); }
+inline double2 operator-(const double2& a, int b) { return make_double2(a.x - (long double)b, a.y - (long double)b); }
+inline double2 operator-(const double2& a, uint b) { return make_double2(a.x - (long double)b, a.y - (long double)b); }
+inline double2 operator-(double b, const double2& a) { return make_double2(b - a.x, b - a.y); }
 inline void operator-=(float2& a, float b) { a.x -= b; a.y -= b; }
 inline void operator-=(float2& a, int b) { a.x -= (float)b; a.y -= (float)b; }
 inline void operator-=(float2& a, uint b) { a.x -= (float)b; a.y -= (float)b; }
+inline void operator-=(double2& a, double b) { a.x -= b; a.y -= b; }
+inline void operator-=(double2& a, int b) { a.x -= (long double)b; a.y -= (long double)b; }
+inline void operator-=(double2& a, uint b) { a.x -= (long double)b; a.y -= (long double)b; }
 inline int2 operator-(const int2& a, const int2& b) { return make_int2(a.x - b.x, a.y - b.y); }
 inline void operator-=(int2& a, const int2& b) { a.x -= b.x;	a.y -= b.y; }
 inline int2 operator-(const int2& a, int b) { return make_int2(a.x - b, a.y - b); }
@@ -361,10 +407,15 @@ inline uint4 operator-(uint b, const uint4& a) { return make_uint4(b - a.x, b - 
 inline void operator-=(uint4& a, uint b) { a.x -= b;	a.y -= b;	a.z -= b;	a.w -= b; }
 
 inline float2 operator*(const float2& a, const float2& b) { return make_float2(a.x * b.x, a.y * b.y); }
+inline double2 operator*(const double2& a, const double2& b) { return make_double2(a.x * b.x, a.y * b.y); }
 inline void operator*=(float2& a, const float2& b) { a.x *= b.x;	a.y *= b.y; }
+inline void operator*=(double2& a, const double2& b) { a.x *= b.x;	a.y *= b.y; }
 inline float2 operator*(const float2& a, float b) { return make_float2(a.x * b, a.y * b); }
 inline float2 operator*(float b, const float2& a) { return make_float2(b * a.x, b * a.y); }
+inline double2 operator*(const double2& a, double b) { return make_double2(a.x * b, a.y * b); }
+inline double2 operator*(double b, const double2& a) { return make_double2(b * a.x, b * a.y); }
 inline void operator*=(float2& a, float b) { a.x *= b;	a.y *= b; }
+inline void operator*=(double2& a, double b) { a.x *= b;	a.y *= b; }
 inline int2 operator*(const int2& a, const int2& b) { return make_int2(a.x * b.x, a.y * b.y); }
 inline void operator*=(int2& a, const int2& b) { a.x *= b.x;	a.y *= b.y; }
 inline int2 operator*(const int2& a, int b) { return make_int2(a.x * b, a.y * b); }
@@ -407,10 +458,15 @@ inline uint4 operator*(uint b, const uint4& a) { return make_uint4(b * a.x, b * 
 inline void operator*=(uint4& a, uint b) { a.x *= b;	a.y *= b;	a.z *= b;	a.w *= b; }
 
 inline float2 operator/(const float2& a, const float2& b) { return make_float2(a.x / b.x, a.y / b.y); }
+inline double2 operator/(const double2& a, const double2& b) { return make_double2(a.x / b.x, a.y / b.y); }
 inline void operator/=(float2& a, const float2& b) { a.x /= b.x;	a.y /= b.y; }
+inline void operator/=(double2& a, const double2& b) { a.x /= b.x;	a.y /= b.y; }
 inline float2 operator/(const float2& a, float b) { return make_float2(a.x / b, a.y / b); }
+inline double2 operator/(const double2& a, double b) { return make_double2(a.x / b, a.y / b); }
 inline void operator/=(float2& a, float b) { a.x /= b;	a.y /= b; }
+inline void operator/=(double2& a, double b) { a.x /= b;	a.y /= b; }
 inline float2 operator/(float b, const float2& a) { return make_float2(b / a.x, b / a.y); }
+inline double2 operator/(double b, const double2& a) { return make_double2(b / a.x, b / a.y); }
 inline float3 operator/(const float3& a, const float3& b) { return make_float3(a.x / b.x, a.y / b.y, a.z / b.z); }
 inline void operator/=(float3& a, const float3& b) { a.x /= b.x;	a.y /= b.y;	a.z /= b.z; }
 inline float3 operator/(const float3& a, float b) { return make_float3(a.x / b, a.y / b, a.z / b); }
@@ -424,6 +480,7 @@ inline float4 operator/(float b, const float4& a) { return make_float4(b / a.x, 
 
 //== operator==
 inline bool operator==(const float2& a, const float2& b) { return a.x == b.x && a.y == b.y; }
+inline bool operator==(const double2& a, const double2& b) { return a.x == b.x && a.y == b.y; }
 inline bool operator==(const float3& a, const float3& b) { return a.x == b.x && a.y == b.y && a.z == b.z; }
 inline bool operator==(const float4& a, const float4& b) { return a.x == b.x && a.y == b.y && a.z == b.z && a.w == b.w; }
 inline bool operator==(const int2& a, const int2& b) { return a.x == b.x && a.y == b.y; }
@@ -481,6 +538,7 @@ inline float lerp(const float a, const float b, const float t) { return a + t * 
 inline float2 lerp(const float2& a, const float2& b, float t) { return a + t * (b - a); }
 inline float3 lerp(const float3& a, const float3& b, float t) { return a + t * (b - a); }
 inline float4 lerp(const float4& a, const float4& b, float t) { return a + t * (b - a); }
+template <typename T> inline T lerp(const T& a, const T& b, float t) { return a + t * (b - a); }
 
 inline float smoothstep(const float a, const float b, const float x) {
 	const float y = clamp((x - a) / (b - a), 0.0f, 1.0f);
@@ -500,6 +558,7 @@ inline float4 smoothstep(const float4 a, const float4 b, const float4 x) {
 }
 
 inline float dot(const float2& a, const float2& b) { return a.x * b.x + a.y * b.y; }
+inline long double dot(const double2& a, const double2& b) { return a.x * b.x + a.y * b.y; }
 inline float dot(const float3& a, const float3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 inline float dot(const float4& a, const float4& b) { return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w; }
 inline int dot(const int2& a, const int2& b) { return a.x * b.x + a.y * b.y; }
@@ -516,6 +575,7 @@ inline float sqrLength(const float3& v) { return dot(v, v); }
 inline float sqrLength(const float4& v) { return dot(v, v); }
 
 inline float length(const float2& v) { return sqrtf(dot(v, v)); }
+inline long double length(const double2& v) { return sqrt(dot(v, v)); }
 inline float length(const float3& v) { return sqrtf(dot(v, v)); }
 inline float length(const float4& v) { return sqrtf(dot(v, v)); }
 

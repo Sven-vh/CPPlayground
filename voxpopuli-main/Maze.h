@@ -1,7 +1,7 @@
 #pragma once
 #include <stack>
-#define WALL 0xffffff
-#define EMPTY 0x000000
+#define WALL 0x000000
+#define EMPTY 0xffffff
 
 namespace Tmpl8 {
 	class Maze : public TheApp {

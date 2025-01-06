@@ -123,8 +123,11 @@
   <!-- END Custom section -->
   <ItemGroup>
     <ClCompile Include="Ant.cpp" />
+    <ClCompile Include="CircleFill.cpp" />
+    <ClCompile Include="ColorCircle.cpp" />
     <ClCompile Include="ColorWheel.cpp" />
     <ClCompile Include="Dots.cpp" />
+    <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="EmptyApp.cpp" />
     <ClCompile Include="Fractal.cpp" />
     <ClCompile Include="GameOfLife.cpp" />
@@ -141,6 +144,7 @@
     <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Lines.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="SandSimulation.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="SineWave.cpp" />
     <ClCompile Include="template\opencl.cpp" />
@@ -158,8 +162,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ant.h" />
+    <ClInclude Include="CircleFill.hpp" />
+    <ClInclude Include="ColorCircle.h" />
     <ClInclude Include="ColorWheel.h" />
     <ClInclude Include="Dots.h" />
+    <ClInclude Include="Drawing.h" />
     <ClInclude Include="EmptyApp.h" />
     <ClInclude Include="Fractal.h" />
     <ClInclude Include="GameOfLife.h" />
@@ -176,6 +183,7 @@
     <ClInclude Include="lib\imgui\imstb_truetype.h" />
     <ClInclude Include="Lines.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="SandSimulation.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="SineWave.h" />
     <ClInclude Include="template\camera.h" />

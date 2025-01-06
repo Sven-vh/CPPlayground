@@ -25,12 +25,24 @@ void Maze::Tick(float deltaTime) {
 		}
 	}
 
-	if (path.empty() && keepLongestPath) {
+	if (path.empty() && keepLongestPath && !longestPath.empty()) {
 		//draw longest path
+
+		int2 prev = longestPath.top();
 		while (!longestPath.empty()) {
-			screen->Plot(longestPath.top().x, longestPath.top().y, 0x00ff00);
+			screen->Plot(prev.x, prev.y, 0x00ff00);
 			longestPath.pop();
+
+			if (!longestPath.empty()) {
+				int2 next = longestPath.top();
+				int2 between = make_int2(make_float2(prev + next) / 2.0f);
+				screen->Plot(between.x, between.y, 0x00ff00);
+				prev = next;
+			}
 		}
+
+		//place the finish
+		screen->Plot(prev.x, prev.y, 0xff0000);
 	}
 
 
@@ -97,7 +109,7 @@ void Tmpl8::Maze::Step() {
 
 				if (keepLongestPath) {
 					if (path.size() > longestPath.size()) {
-						longestPath = path;
+						memcpy(&longestPath, &path, sizeof(path));
 					}
 				}
 

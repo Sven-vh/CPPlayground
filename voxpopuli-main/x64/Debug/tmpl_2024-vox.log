@@ -1,21 +1,5 @@
-﻿  Verlet.cpp
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(12,68): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(12,33): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(31,44): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(31,32): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(57,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(182,62): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(182,58): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(182,36): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(187,46): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(187,42): warning C4244: 'argument': conversion from 'const float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(187,28): warning C4244: 'argument': conversion from 'const float' to 'const int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(196,77): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(196,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(196,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(196,18): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(220,42): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\Verlet.cpp(220,26): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-  tmpl_2024-vox.vcxproj -> C:\Users\Sven\Github Projects\CPPlayground\voxpopuli-main\x64\voxpopuli_debug.exe
+﻿  Fractal.cpp
+E:\Github Projects\CPPlayground\voxpopuli-main\Fractal.cpp(34,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  tmpl_2024-vox.vcxproj -> E:\Github Projects\CPPlayground\voxpopuli-main\x64\voxpopuli_debug.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

@@ -402,4 +402,8 @@ public:
 #include "Hexcells.h"
 #include "Fractal.h"
 #include "Shaders.h"
+#include "SandSimulation.h"
+#include "Drawing.h"
+#include "CircleFill.hpp"
+#include "ColorCircle.h"
 // EOF

@@ -7,7 +7,7 @@
 #pragma comment( linker, "/subsystem:windows /ENTRY:mainCRTStartup" )
 
 using namespace Tmpl8;
-#define CUSTOM_SHADER 1
+#define CUSTOM_SHADER 0
 
 // Enable usage of dedicated GPUs in notebooks
 // Note: this does cause the linker to produce a .lib and .exp file;
@@ -168,7 +168,7 @@ void main() {
 #else
 	Surface* screen = new Surface(SCRWIDTH, SCRHEIGHT);
 #endif
-	app = new Shaders();
+	app = new Drawing();
 #if 0
 	// deserizalize
 	FILE* f = fopen("appstate.dat", "rb");
@@ -343,6 +343,7 @@ void main() {
 	while (!glfwWindowShouldClose(window)) {
 		deltaTime = min(500.0f, 1000.0f * timer.elapsed());
 		timer.reset();
+		//deltatime is in milliseconds
 		app->Tick(deltaTime);
 		// send the rendering result to the screen using OpenGL
 		if (frameNr++ > 1) {
@@ -388,11 +389,26 @@ void main() {
 					if (ImGui::MenuItem("Hexcells")) {
 						SwitchApp(new Hexcells());
 					}
-					if (ImGui::MenuItem("Fractal")) {
-						SwitchApp(new Fractal());
+					if (ImGui::MenuItem("Circles")) {
+						SwitchApp(new Circles());
 					}
 					if (ImGui::MenuItem("Shaders")) {
 						SwitchApp(new Shaders());
+					}
+					if (ImGui::MenuItem("SandSimulation")) {
+						SwitchApp(new SandSimulation());
+					}
+					if (ImGui::MenuItem("ColorWheel")) {
+						SwitchApp(new ColorWheel());
+					}
+					if (ImGui::MenuItem("Drawing")) {
+						SwitchApp(new Drawing());
+					}
+					if (ImGui::MenuItem("CircleFill")) {
+						SwitchApp(new CircleFill());
+					}
+					if (ImGui::MenuItem("ColorCircle")) {
+						SwitchApp(new ColorCircle());
 					}
 					ImGui::EndMenu();
 				}
@@ -432,7 +448,7 @@ void main() {
 	ImGui::DestroyContext();
 	glfwDestroyWindow(window);
 	glfwTerminate();
-	}
+}
 
 // Jobmanager implementation
 DWORD JobThreadProc(LPVOID lpParameter) {
