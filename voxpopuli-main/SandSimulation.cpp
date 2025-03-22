@@ -99,6 +99,7 @@ void SandSimulation::UpdateWorld() {
 	const int worldHeight = world.Height;
 
 	newWorld.Clear();
+#pragma omp parallel
 	for (int y = worldHeight - 1; y >= 0; y--) {
 		for (int x = 0; x < worldWidth; x++) {
 			Particle p = world.GetCopy(x, y);

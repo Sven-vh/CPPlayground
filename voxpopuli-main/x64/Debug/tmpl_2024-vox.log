@@ -1,5 +1,0 @@
-﻿  Fractal.cpp
-E:\Github Projects\CPPlayground\voxpopuli-main\Fractal.cpp(34,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  tmpl_2024-vox.vcxproj -> E:\Github Projects\CPPlayground\voxpopuli-main\x64\voxpopuli_debug.exe
-  'pwsh.exe' is not recognized as an internal or external command,
-  operable program or batch file.
