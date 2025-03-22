@@ -44,7 +44,7 @@ private:
 	DrawingCamera2D savedCam;
 
 	bool zoomIn = false;
-	float zoomSpeed = 1;
+	float zoomSpeed = 10;
 
 	void UpdateCircles(bool distanceCheck = true);
 	void DrawCircles();

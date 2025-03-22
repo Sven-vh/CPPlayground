@@ -41,7 +41,7 @@ namespace Tmpl8 {
 		void KeyDown(int key) { /* implement if you want to handle keys */ }
 		// data members
 		int2 mousePos;
-		bool mouseDown = false;
+		int mouseDown = -1;
 	private:
 
 		bool circleConstraint = false;

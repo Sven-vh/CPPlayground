@@ -157,15 +157,14 @@ void Verlet::Shutdown() {
 }
 
 void Tmpl8::Verlet::MouseUp(int button) {
-	if (button == 0) {
-		mouseDown = false;
+	if (button == 0 || button == 1) {
+		mouseDown = -1;
 	}
 }
 
 void Tmpl8::Verlet::MouseDown(int button) {
-	if (button == 0 && !ImGui::GetIO().WantCaptureMouse) {
-		mouseDown = true;
-
+	if (!ImGui::GetIO().WantCaptureMouse) {
+		mouseDown = button;
 	}
 }
 
@@ -224,14 +223,16 @@ void Tmpl8::Verlet::ApplyConstraints() {
 }
 
 void Tmpl8::Verlet::UpdatePositions(const float deltaTime) {
-
+	//print mouse down
+	//printf("mouseDown: %d\n", mouseDown);
 	for (auto& p : particles) {
-		if (mouseDown) {
-			//p.acceleration += (float2(mousePos.x, mousePos.y) - p.position) * mouseForce;
-			//p.acceleration += (float2(mousePos.x, mousePos.y) - p.position) * gravity.y * mouseForce;
-			//make the the particles follow the mouse by using gravity, based on the distance to the mouse
+		if (mouseDown != -1) {
 			float distance = length(float2(mousePos.x, mousePos.y) - p.position);
-			p.acceleration += (float2(mousePos.x, mousePos.y) - p.position) * gravity.y * mouseForce / distance;
+			if (mouseDown == 0) {
+				p.acceleration += (float2(mousePos.x, mousePos.y) - p.position) * gravity.y * mouseForce / distance;
+			} else if (mouseDown == 1) {
+				p.acceleration += (p.position - float2(mousePos.x, mousePos.y)) * gravity.y * mouseForce / distance;
+			}
 		}
 		p.acceleration += gravity;
 		float2 velocity = p.position - p.previousPosition;

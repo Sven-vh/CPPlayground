@@ -50,7 +50,7 @@ void Dots::UpdateAnts256(const float deltaTime) {
 	const __m256 epsilon = _mm256_set1_ps(FLT_EPSILON);
 	const int iterations = numAnts >> 3;
 
-	#pragma omp parallel for schedule(dynamic)
+	//#pragma omp parallel for schedule(dynamic)
 	for (int i = 0; i < numAnts; i += 8) {
 
 		//__m256 xDir, yDir, xVel, yVel, xAcc, yAcc, xPos, yPos;
@@ -83,9 +83,16 @@ void Dots::UpdateAnts256(const float deltaTime) {
 			//float length = sqrt(dx * dx + dy * dy);
 			//xDesiredDirections[i] = dx / length;
 			//yDesiredDirections[i] = dy / length;
+			__m256 dx;
+			__m256 dy;
+			if (leftDown) {
+				dx = _mm256_sub_ps(mousePosX, xPos);
+				dy = _mm256_sub_ps(mousePosY, yPos);
+			} else if (rightDown) {
+				dx = _mm256_sub_ps(xPos, mousePosX);
+				dy = _mm256_sub_ps(yPos, mousePosY);
+			}
 
-			__m256 dx = _mm256_sub_ps(mousePosX, xPos);
-			__m256 dy = _mm256_sub_ps(mousePosY, yPos);
 			//dx = _mm256_sub_ps(zero, dx);
 			//dy = _mm256_sub_ps(zero, dy);
 			__m256 length = _mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(dx, dx), _mm256_mul_ps(dy, dy)));
@@ -443,7 +450,7 @@ void Dots::RenderAnts() {
 
 void Dots::SubtractScreen(const float deltaTime) {
 	if (!clearScreen) return;
-#pragma omp parallel for schedule(dynamic)
+//#pragma omp parallel for schedule(dynamic)
 	for (int y = 0; y < SCRHEIGHT; y++) {
 		for (int x = 0; x < SCRWIDTH; x++) {
 			const float4 color = screen->GetPixel(x, y);
@@ -550,7 +557,7 @@ void Dots::UI() {
 	ImGui::ColorEdit4("Ant Color", &antColor.x);
 	ImGui::ColorEdit4("Background Color", &backgroundColor.x);
 	ImGui::DragFloat("Evaporate Speed", &evaporateSpeed, 0.0001f, 0.0f, 1.0f, "%.10f");
-	ImGui::DragFloat("MaxSpeed", &MaxSpeed, 0.1f, 0.0f, 10.0f);
+	ImGui::DragFloat("MaxSpeed", &MaxSpeed, 0.1f, 0.0f, 50.0f);
 	ImGui::DragFloat("SteerStrength", &SteerStrength, 0.1f, 0.0f, 10.0f);
 	ImGui::DragFloat("WanderStrength", &WanderStrength, 0.1f, 0.0f, 10.0f);
 	ImGui::Checkbox("Wander", &wander);
@@ -566,17 +573,29 @@ void Dots::Shutdown() {
 }
 
 void Dots::MouseUp(int button) {
-	if (!mouseDown) return;
-	mouseDown = false;
-	wander = true;
+
+	if (button == 0) {
+		leftDown = false;
+		wander = true;
+	} else if (button == 1) {
+		rightDown = false;
+		wander = true;
+	}
+
+
 }
 
 void Dots::MouseDown(int button) {
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.WantCaptureMouse) return;
 
-	mouseDown = true;
-	wander = false;
+	if (button == 0) {
+		leftDown = true;
+		wander = false;
+	} else if (button == 1) {
+		rightDown = true;
+		wander = false;
+	}
 }
 
 void Dots::PerformanceReport(Timer& t) {

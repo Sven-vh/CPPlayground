@@ -398,9 +398,9 @@ void main() {
 					//if (ImGui::MenuItem("SandSimulation")) {
 					//	SwitchApp(new SandSimulation());
 					//}
-					if (ImGui::MenuItem("ColorWheel")) {
-						SwitchApp(new ColorWheel());
-					}
+					//if (ImGui::MenuItem("ColorWheel")) {
+					//	SwitchApp(new ColorWheel());
+					//}
 					if (ImGui::MenuItem("Drawing")) {
 						SwitchApp(new Drawing());
 					}
