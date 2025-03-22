@@ -39,3 +39,5 @@ voxpopuli-main/.vs/tmpl_2024-vox/v17/ipch/fd0e4e550fd7d0e8.ipch
 *.tlog
 /voxpopuli-main/x64
 /voxpopuli-main/.vs
+.vs
+x64
