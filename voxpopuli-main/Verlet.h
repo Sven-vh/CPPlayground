@@ -62,16 +62,16 @@ namespace Tmpl8 {
 
 		int subSteps = 8;
 
-		int spawnCount = 1000;
+		int spawnCount = 2000;
 		float particleSize = 5.0f;
 		float drawingSizeMultiplier = 1.1f;
 
 		std::vector<VerletParticle> particles;
 
 		float2 gravity = float2(0, 0.001f);
-		float mouseForce = 0.001f;
+		float mouseForce = 1.0f;
 		float maxVelocity = 2.0f;
-		float maxColorVelocity = 0.4f;
+		float maxColorVelocity = 1.0f;
 
 		float2 constraintPosition = float2(SCRWIDTH / 2, SCRHEIGHT / 2);
 		float constraintRadius = 300.0f;

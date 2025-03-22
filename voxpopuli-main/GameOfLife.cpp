@@ -17,7 +17,7 @@ void GameOfLife::Init() {
 	oldScreen = new Surface(SCRWIDTH, SCRHEIGHT);
 #endif
 	//randomize the screen with on and off cells
-	//RandomizeScreen();
+	RandomizeScreen();
 }
 
 // -----------------------------------------------------------

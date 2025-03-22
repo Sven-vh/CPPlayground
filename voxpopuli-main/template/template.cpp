@@ -168,7 +168,7 @@ void main() {
 #else
 	Surface* screen = new Surface(SCRWIDTH, SCRHEIGHT);
 #endif
-	app = new Drawing();
+	app = new Dots();
 #if 0
 	// deserizalize
 	FILE* f = fopen("appstate.dat", "rb");
@@ -368,15 +368,15 @@ void main() {
 					if (ImGui::MenuItem("GameOfLife")) {
 						SwitchApp(new GameOfLife());
 					}
-					if (ImGui::MenuItem("Lines")) {
-						SwitchApp(new Lines());
-					}
-					if (ImGui::MenuItem("Sinwave")) {
-						SwitchApp(new SineWave());
-					}
-					if (ImGui::MenuItem("Renderer")) {
-						SwitchApp(new Renderer());
-					}
+					//if (ImGui::MenuItem("Lines")) {
+					//	SwitchApp(new Lines());
+					//}
+					//if (ImGui::MenuItem("Sinwave")) {
+					//	SwitchApp(new SineWave());
+					//}
+					//if (ImGui::MenuItem("Renderer")) {
+					//	SwitchApp(new Renderer());
+					//}
 					if (ImGui::MenuItem("Maze")) {
 						SwitchApp(new Maze());
 					}
@@ -386,30 +386,30 @@ void main() {
 					if (ImGui::MenuItem("Verlet")) {
 						SwitchApp(new Verlet());
 					}
-					if (ImGui::MenuItem("Hexcells")) {
-						SwitchApp(new Hexcells());
-					}
+					//if (ImGui::MenuItem("Hexcells")) {
+					//	SwitchApp(new Hexcells());
+					//}
 					if (ImGui::MenuItem("Circles")) {
 						SwitchApp(new Circles());
 					}
-					if (ImGui::MenuItem("Shaders")) {
-						SwitchApp(new Shaders());
-					}
-					if (ImGui::MenuItem("SandSimulation")) {
-						SwitchApp(new SandSimulation());
-					}
+					//if (ImGui::MenuItem("Shaders")) {
+					//	SwitchApp(new Shaders());
+					//}
+					//if (ImGui::MenuItem("SandSimulation")) {
+					//	SwitchApp(new SandSimulation());
+					//}
 					if (ImGui::MenuItem("ColorWheel")) {
 						SwitchApp(new ColorWheel());
 					}
 					if (ImGui::MenuItem("Drawing")) {
 						SwitchApp(new Drawing());
 					}
-					if (ImGui::MenuItem("CircleFill")) {
-						SwitchApp(new CircleFill());
-					}
-					if (ImGui::MenuItem("ColorCircle")) {
-						SwitchApp(new ColorCircle());
-					}
+					//if (ImGui::MenuItem("CircleFill")) {
+					//	SwitchApp(new CircleFill());
+					//}
+					//if (ImGui::MenuItem("ColorCircle")) {
+					//	SwitchApp(new ColorCircle());
+					//}
 					ImGui::EndMenu();
 				}
 				ImGui::EndMainMenuBar();

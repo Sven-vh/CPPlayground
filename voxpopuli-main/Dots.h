@@ -47,7 +47,6 @@ private:
 	//0xFF977D5E as a float4
 	float4 backgroundColor = float4(0.0f);
 	float evaporateSpeed = 0.1f;
-	float antSize = 10.0f;
 
 	float MaxSpeed = 7.0f;
 	float SteerStrength = 2.0f;

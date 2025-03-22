@@ -17,7 +17,8 @@ void ColorWheel::Tick(float deltaTime) {
 
 	const int count = pixels.size();
 	for (int i = 0; i < count; i++) {
-		pixels[i].offset += deltaTime * turnSpeed;
+		Pixel& pixel = pixels[i];
+		pixel.offset += deltaTime * turnSpeed;
 	}
 
 	for (int i = 0; i < count; i++) {

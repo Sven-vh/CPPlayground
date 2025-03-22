@@ -25,7 +25,7 @@ namespace Tmpl8 {
 	private:
 		int stepsPerFrame = 1000;
 		bool instant = false;
-		bool keepLongestPath = false;
+		bool keepLongestPath = true;
 		int2 position;
 
 		std::stack<int2> path;

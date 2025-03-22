@@ -373,8 +373,6 @@ inline void safe_add(uint& x, const uint& y) {
 void Dots::RenderAnts() {
 
 #if 1
-	//old code
-	const float2 size = float2(antSize);
 #if HDR
 	const float4 color = antColor;
 #else
@@ -549,7 +547,6 @@ void Dots::UI() {
 		screen->Clear(color);
 	}
 
-	ImGui::DragFloat("Ant Size", &antSize, 0.1f, 0.0f, 100.0f);
 	ImGui::ColorEdit4("Ant Color", &antColor.x);
 	ImGui::ColorEdit4("Background Color", &backgroundColor.x);
 	ImGui::DragFloat("Evaporate Speed", &evaporateSpeed, 0.0001f, 0.0f, 1.0f, "%.10f");
